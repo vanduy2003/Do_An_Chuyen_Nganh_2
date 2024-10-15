@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "67206596321",
+    "firebase_url": "https://cookinginstruction-989e3-default-rtdb.firebaseio.com",
+    "project_id": "cookinginstruction-989e3",
+    "storage_bucket": "cookinginstruction-989e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67206596321:android:39b115a1cd41c9088499a0",
+        "android_client_info": {
+          "package_name": "nhom12.eauta.cookinginstructions"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8u7vgAXfMg7qPi3Duu0Jg7zf0wWOI4nU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

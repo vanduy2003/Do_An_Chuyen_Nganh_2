@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/cooking"
+        android:label="Cooking"
+        android:roundIcon="@mipmap/cooking"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CookingInstructions"
+        tools:targetApi="31">
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_UpdateInfo"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Favorite"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.UpdateInfor"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_RecipeDetail"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_DishList"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Home"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Register"
+            android:exported="false" />
+        <activity
+            android:name="nhom12.eauta.cookinginstructions.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

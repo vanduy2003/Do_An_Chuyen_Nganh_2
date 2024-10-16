@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,7 +26,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String userId;
     private String avatarUrl; // Thay đổi: Thêm biến để lưu URL ảnh đại diện
-    FloatingActionButton btnThoat;
+    ImageView btnThoat;
     Button saveButton;
 
 

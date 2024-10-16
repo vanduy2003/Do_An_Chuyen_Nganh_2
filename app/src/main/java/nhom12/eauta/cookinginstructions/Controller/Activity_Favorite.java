@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private DatabaseReference favoritesRef;
     private ArrayList<Favorite> favoriteList;
     private FavoriteAdapter adapter;
-    FloatingActionButton btnThoat;
+    ImageView btnThoat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

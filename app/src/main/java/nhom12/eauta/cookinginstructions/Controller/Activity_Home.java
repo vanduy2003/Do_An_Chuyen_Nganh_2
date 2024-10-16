@@ -7,26 +7,34 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 import nhom12.eauta.cookinginstructions.Adapter.CatagoryAdapter;
 import nhom12.eauta.cookinginstructions.Model.CatagoryItem;
 import nhom12.eauta.cookinginstructions.R;
+
 public class Activity_Home extends AppCompatActivity {
     GridView gvCatagory;
     CatagoryAdapter catagoryAdapter;
@@ -34,19 +42,55 @@ public class Activity_Home extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference categoriesRef;
     EditText txtSearch;
-    private ImageButton btnAcc, btnFavorite;
+    private TextView btnAcc, btnFavorite;
+    private DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle drawerToggle;
+    private ImageButton btnMenu;
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+
+        // Thiết lập ActionBarDrawerToggle
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        // Khóa vuốt mở Navigation Drawer
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        // Kiểm tra ActionBar có null không
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arr);
         gvCatagory = findViewById(R.id.gvDishList);
-        btnAcc = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
         gvCatagory.setAdapter(catagoryAdapter);
         btnFavorite = findViewById(R.id.btnFavorite);
         txtSearch = findViewById(R.id.txtSearch);
+        btnMenu = findViewById(R.id.btnMenu);
+
+        btnMenu.setOnClickListener(view -> {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
 
         loadCategories();
@@ -66,7 +110,6 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
 
-
         gvCatagory.setOnItemClickListener((parent, view, position, id) -> {
             CatagoryItem selectedCategory = arr.get(position);
             // Tạo Intent để chuyển sang Activity mới
@@ -75,7 +118,6 @@ public class Activity_Home extends AppCompatActivity {
             intent.putExtra("CategoryId", selectedCategory.getId());
             startActivity(intent);
         });
-
 
         txtSearch.addTextChangedListener(new android.text.TextWatcher() {
             @Override
@@ -101,6 +143,39 @@ public class Activity_Home extends AppCompatActivity {
             startActivity(intent);
         });
 
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Xử lý các mục menu tại đây
+                switch (item.getItemId()) {
+//                    case R.id.menu_Settings:
+//                        Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(GravityCompat.START);
+//                        return true;
+//
+//                    case R.id.menu_Share:
+//                        Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(GravityCompat.START);
+//                        return true;
+//
+//                    case R.id.menu_Exit:
+//                        finish(); // Thực hiện hành động thoát
+//                        return true;
+//
+//                    case R.id.menu_Hint1:
+//                        Toast.makeText(Activity_Home.this, "Hint 1 Selected", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(GravityCompat.START);
+//                        return true;
+//
+//                    case R.id.menu_Hint2:
+//                        Toast.makeText(Activity_Home.this, "Hint 2 Selected", Toast.LENGTH_SHORT).show();
+//                        drawerLayout.closeDrawer(GravityCompat.START);
+//                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void searchCategories(String query) {
@@ -119,7 +194,6 @@ public class Activity_Home extends AppCompatActivity {
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, filteredList);
         gvCatagory.setAdapter(catagoryAdapter);
         catagoryAdapter.notifyDataSetChanged();
-
     }
 
     private void loadCategories() {
@@ -153,7 +227,7 @@ public class Activity_Home extends AppCompatActivity {
     @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        // Tao Dialog xac nhan thoat
+        // Tạo Dialog xác nhận thoát
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Xác nhận");
         builder.setMessage("Bạn có muốn thoát ứng dụng không?");
@@ -172,7 +246,11 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
         builder.create().show();
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
-
-
 }

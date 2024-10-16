@@ -34,7 +34,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference recipeRef, favoriteRef;
-    FloatingActionButton btnThoat;
+    ImageView btnThoat;
     Button btnTym, btnShare;
     WebView webView;
     private String userId;

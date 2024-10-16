@@ -28,7 +28,7 @@ public class UpdateInfor extends AppCompatActivity {
 
     ImageView imgAvatar;
     TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday;
-    FloatingActionButton btnThoat;
+    ImageView btnThoat;
     Button btnUpdate, btnDangxuat;
 
     @SuppressLint("MissingInflatedId")

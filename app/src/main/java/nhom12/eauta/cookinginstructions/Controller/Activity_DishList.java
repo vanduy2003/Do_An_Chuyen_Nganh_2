@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +32,7 @@ public class Activity_DishList extends AppCompatActivity {
     ArrayList<DishItem> filteredList = new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference recipesRef;
-    FloatingActionButton btnThoat;
+    ImageView btnThoat;
     EditText txtSearch;
 
     @Override

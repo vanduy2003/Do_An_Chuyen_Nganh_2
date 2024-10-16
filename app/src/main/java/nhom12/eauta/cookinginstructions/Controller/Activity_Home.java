@@ -43,7 +43,7 @@ public class Activity_Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arr);
         gvCatagory = findViewById(R.id.gvDishList);
-        btnAcc = findViewById(R.id.btnAcount);
+        btnAcc = findViewById(R.id.btnBiQuyet);
         gvCatagory.setAdapter(catagoryAdapter);
         btnFavorite = findViewById(R.id.btnFavorite);
         txtSearch = findViewById(R.id.txtSearch);

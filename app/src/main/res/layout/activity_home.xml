@@ -84,6 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Banner" />
 
     <!-- Phần navbar cố định ở cuối màn hình -->
+
     <LinearLayout
         android:id="@+id/navbar"
         android:layout_width="0dp"
@@ -91,7 +92,6 @@
         android:background="#FFFFFF"
         android:orientation="horizontal"
         android:paddingTop="10dp"
-        android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

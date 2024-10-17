@@ -89,8 +89,8 @@
             <GridView
                 android:id="@+id/gvDishList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="3"/>
+                android:layout_height="345dp"
+                android:numColumns="3" />
         </LinearLayout>
     </ScrollView>
 

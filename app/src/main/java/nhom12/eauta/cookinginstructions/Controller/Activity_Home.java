@@ -48,6 +48,7 @@ public class Activity_Home extends AppCompatActivity {
     ActionBarDrawerToggle drawerToggle;
     private ImageButton btnMenu;
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
@@ -78,11 +79,12 @@ public class Activity_Home extends AppCompatActivity {
 
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arr);
         gvCatagory = findViewById(R.id.gvDishList);
-        btnAcc = findViewById(R.id.btnAcount);
         gvCatagory.setAdapter(catagoryAdapter);
         btnFavorite = findViewById(R.id.btnFavorite);
         txtSearch = findViewById(R.id.txtSearch);
         btnMenu = findViewById(R.id.btnMenu);
+        btnAcc = findViewById(R.id.btnAcount);
+
 
         btnMenu.setOnClickListener(view -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -148,32 +150,17 @@ public class Activity_Home extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Xử lý các mục menu tại đây
-                switch (item.getItemId()) {
-//                    case R.id.menu_Settings:
-//                        Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Share:
-//                        Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Exit:
-//                        finish(); // Thực hiện hành động thoát
-//                        return true;
-//
-//                    case R.id.menu_Hint1:
-//                        Toast.makeText(Activity_Home.this, "Hint 1 Selected", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Hint2:
-//                        Toast.makeText(Activity_Home.this, "Hint 2 Selected", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
+                if (item.getItemId() == R.id.menu_Settings) {
+                    Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true; // Trả về true nếu đã xử lý
+
+                } else if (item.getItemId() == R.id.menu_Share) {
+                    Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
                 }
-                return false;
+                return false; // Trả về false nếu không xử lý được mục nào
             }
         });
     }

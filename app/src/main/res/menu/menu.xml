@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_Settings"
+        android:icon="@drawable/tym"
+        android:title="Yêu Thích"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_Share"
+        android:icon="@drawable/share"
+        android:title="Chia Sẻ"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_Evaluate"
+        android:title="Đánh Giá App"
+        android:orderInCategory="6"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_Clause"
+        android:title="Điều Khoản"
+        android:orderInCategory="6"
+        app:showAsAction="never" />
+</menu>

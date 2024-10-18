@@ -36,6 +36,9 @@
             android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Register"
             android:exported="false" />
         <activity
+            android:name="nhom12.eauta.cookinginstructions.Controller.GoodTips"
+            android:exported="false" />
+        <activity
             android:name="nhom12.eauta.cookinginstructions.MainActivity"
             android:exported="true">
             <intent-filter>

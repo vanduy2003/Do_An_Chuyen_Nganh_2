@@ -42,7 +42,7 @@ public class Activity_Home extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference categoriesRef;
     EditText txtSearch;
-    private TextView btnAcc, btnFavorite;
+    private TextView btnAcc, btnFavorite, btnMeoHay;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
@@ -84,7 +84,7 @@ public class Activity_Home extends AppCompatActivity {
         txtSearch = findViewById(R.id.txtSearch);
         btnMenu = findViewById(R.id.btnMenu);
         btnAcc = findViewById(R.id.btnAcount);
-
+        btnMeoHay = findViewById(R.id.btnMeoHay);
 
         btnMenu.setOnClickListener(view -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -101,6 +101,12 @@ public class Activity_Home extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
 
+        // Mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            Intent intent = new Intent(Activity_Home.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
         // Khi người dùng nhấn nút tài khoản
         btnAcc.setOnClickListener(view -> {
             if (userId != null) {

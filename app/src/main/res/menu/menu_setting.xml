@@ -7,4 +7,9 @@
         android:title="Cập nhật thông tin"
         android:orderInCategory="1"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/btnDangxuat"
+        android:title="Đăng xuất"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
 </menu>

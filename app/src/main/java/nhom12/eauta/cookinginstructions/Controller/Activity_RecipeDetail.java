@@ -239,7 +239,6 @@ public class Activity_RecipeDetail extends AppCompatActivity {
                 Log.w("Firebase", "loadRecipeDetails:onCancelled", databaseError.toException());
             }
         });
-
     }
 
     private void addRecipeToFavorites(String recipeId) {

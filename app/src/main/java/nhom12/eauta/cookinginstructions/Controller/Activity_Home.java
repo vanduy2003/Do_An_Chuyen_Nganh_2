@@ -32,13 +32,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import nhom12.eauta.cookinginstructions.Adapter.CatagoryAdapter;
+import nhom12.eauta.cookinginstructions.Adapter.TopAdapter;
 import nhom12.eauta.cookinginstructions.Model.CatagoryItem;
 import nhom12.eauta.cookinginstructions.R;
 
 public class Activity_Home extends AppCompatActivity {
-    GridView gvCatagory;
+    GridView gvCatagory, gvTopSearch;
     CatagoryAdapter catagoryAdapter;
-    ArrayList<CatagoryItem> arr = new ArrayList<>();
+    TopAdapter topAdapter;
+    ArrayList<CatagoryItem> arrCategories = new ArrayList<>();
+    ArrayList<CatagoryItem> arrTopSearch = new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference categoriesRef;
     EditText txtSearch;
@@ -47,6 +50,7 @@ public class Activity_Home extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     private ImageButton btnMenu;
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -76,13 +80,15 @@ public class Activity_Home extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arr);
+        catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arrCategories);
         gvCatagory = findViewById(R.id.gvDishList);
-        btnAcc = findViewById(R.id.btnAcount);
         gvCatagory.setAdapter(catagoryAdapter);
         btnFavorite = findViewById(R.id.btnFavorite);
         txtSearch = findViewById(R.id.txtSearch);
         btnMenu = findViewById(R.id.btnMenu);
+        btnAcc = findViewById(R.id.btnAcount);
+        gvTopSearch = findViewById(R.id.gvTopSearch);
+
 
         btnMenu.setOnClickListener(view -> {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -95,6 +101,7 @@ public class Activity_Home extends AppCompatActivity {
 
 
         loadCategories();
+        LoadTopSearch();
 
         // Lấy userId từ SharedPreferences
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -112,7 +119,16 @@ public class Activity_Home extends AppCompatActivity {
         });
 
         gvCatagory.setOnItemClickListener((parent, view, position, id) -> {
-            CatagoryItem selectedCategory = arr.get(position);
+            CatagoryItem selectedCategory = arrCategories.get(position);
+            // Tạo Intent để chuyển sang Activity mới
+            Intent intent = new Intent(Activity_Home.this, Activity_DishList.class);
+            // Gửi dữ liệu qua Activity mới
+            intent.putExtra("CategoryId", selectedCategory.getId());
+            startActivity(intent);
+        });
+
+        gvTopSearch.setOnItemClickListener((parent, view, position, id) -> {
+            CatagoryItem selectedCategory = arrTopSearch.get(position);
             // Tạo Intent để chuyển sang Activity mới
             Intent intent = new Intent(Activity_Home.this, Activity_DishList.class);
             // Gửi dữ liệu qua Activity mới
@@ -149,32 +165,17 @@ public class Activity_Home extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Xử lý các mục menu tại đây
-                switch (item.getItemId()) {
-//                    case R.id.menu_Settings:
-//                        Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Share:
-//                        Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Exit:
-//                        finish(); // Thực hiện hành động thoát
-//                        return true;
-//
-//                    case R.id.menu_Hint1:
-//                        Toast.makeText(Activity_Home.this, "Hint 1 Selected", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
-//
-//                    case R.id.menu_Hint2:
-//                        Toast.makeText(Activity_Home.this, "Hint 2 Selected", Toast.LENGTH_SHORT).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        return true;
+                if (item.getItemId() == R.id.menu_Settings) {
+                    Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true; // Trả về true nếu đã xử lý
+
+                } else if (item.getItemId() == R.id.menu_Share) {
+                    Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
                 }
-                return false;
+                return false; // Trả về false nếu không xử lý được mục nào
             }
         });
     }
@@ -186,7 +187,7 @@ public class Activity_Home extends AppCompatActivity {
         }
 
         ArrayList<CatagoryItem> filteredList = new ArrayList<>();
-        for (CatagoryItem item : arr) {
+        for (CatagoryItem item : arrCategories) {
             if (item.getName().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(item);
             }
@@ -204,16 +205,16 @@ public class Activity_Home extends AppCompatActivity {
         categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() { // Sử dụng addListenerForSingleValueEvent để chỉ lắng nghe một lần
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                arr.clear(); // Xóa dữ liệu cũ trước khi thêm dữ liệu mới
+                arrCategories.clear(); // Xóa dữ liệu cũ trước khi thêm dữ liệu mới
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String categoryId = snapshot.getKey(); // Lấy id của danh mục
                     CatagoryItem category = snapshot.getValue(CatagoryItem.class);
                     if (category != null) {
                         category.setId(categoryId); // Gán id cho đối tượng CatagoryItem
-                        arr.add(category);
+                        arrCategories.add(category);
                     }
                 }
-                catagoryAdapter = new CatagoryAdapter(Activity_Home.this, R.layout.layout_item_catagory, arr);
+                catagoryAdapter = new CatagoryAdapter(Activity_Home.this, R.layout.layout_item_catagory, arrCategories);
                 gvCatagory.setAdapter(catagoryAdapter);
                 catagoryAdapter.notifyDataSetChanged();
             }
@@ -224,6 +225,35 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
     }
+
+    private void LoadTopSearch() {
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference topSearchRef = database.getReference("Categories"); // Đảm bảo đường dẫn trong Firebase là đúng
+
+        topSearchRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrTopSearch.clear(); // Xóa dữ liệu cũ trước khi thêm dữ liệu mới
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String categoryId = snapshot.getKey(); // Lấy id của danh mục
+                    CatagoryItem category = snapshot.getValue(CatagoryItem.class);
+                    if (category != null) {
+                        category.setId(categoryId); // Gán id cho đối tượng CatagoryItem
+                        arrTopSearch.add(category);
+                    }
+                }
+                topAdapter = new TopAdapter(Activity_Home.this, R.layout.layout_item_topsearch, arrTopSearch);
+                gvTopSearch.setAdapter(topAdapter);
+                topAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "loadTopSearch:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
 
     @SuppressLint("MissingSuperCall")
     @Override

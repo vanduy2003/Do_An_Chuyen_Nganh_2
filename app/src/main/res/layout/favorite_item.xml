@@ -21,7 +21,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tvFavoriteTitle"
+        android:id="@+id/imgTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

@@ -6,8 +6,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +32,8 @@ public class UpdateInfor extends AppCompatActivity {
 
     ImageView imgAvatar;
     TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday;
-    ImageView btnThoat;
-    Button btnUpdate, btnDangxuat;
+    ImageView btnThoat, btnSetting;
+    Button  btnDangxuat;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,9 +49,10 @@ public class UpdateInfor extends AppCompatActivity {
         txtFavorite = findViewById(R.id.txtFavorite);
         txtBirthday = findViewById(R.id.txtBirthday);
         imgAvatar = findViewById(R.id.imgAvatar);
-        btnUpdate = findViewById(R.id.btnUpdate);
         txtSex = findViewById(R.id.txtSex);
         btnDangxuat = findViewById(R.id.btnDangxuat);
+        btnSetting = findViewById(R.id.btnSetting);
+
 
         String userId = getIntent().getStringExtra("userId");
 
@@ -57,6 +62,28 @@ public class UpdateInfor extends AppCompatActivity {
         ProgressDialog progressDialog = new ProgressDialog(UpdateInfor.this);
         progressDialog.setMessage("Đang tải...");
         progressDialog.show();
+
+        // Thêm mã cho btnSetting
+        btnSetting.setOnClickListener(v -> {
+            // Tạo PopupMenu
+            PopupMenu popupMenu = new PopupMenu(UpdateInfor.this, btnSetting);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_setting, popupMenu.getMenu());
+
+            // Xử lý sự kiện khi chọn mục trong menu
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.btnUpdate) {
+                    // Xử lý cập nhật thông tin ở đây
+                    Intent intent = new Intent(UpdateInfor.this, Activity_UpdateInfo.class);
+                    intent.putExtra("userId", getIntent().getStringExtra("userId"));
+                    startActivity(intent);
+                    return true; // Trả về true nếu xử lý thành công
+                }
+                return false; // Trả về false nếu không xử lý
+            });
+
+            // Hiển thị menu
+            popupMenu.show();
+        });
 
         // Truy vấn dữ liệu từ Firebase
         userRef.addValueEventListener(new ValueEventListener() {
@@ -96,13 +123,6 @@ public class UpdateInfor extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(UpdateInfor.this, "Lỗi: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-
-        btnUpdate.setOnClickListener(v -> {
-            // Xử lý cập nhật thông tin người dùng
-            Intent intent = new Intent(UpdateInfor.this, Activity_UpdateInfo.class);
-            intent.putExtra("userId", userId);
-            startActivity(intent);
         });
 
         btnDangxuat.setOnClickListener(v -> {

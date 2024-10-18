@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import nhom12.eauta.cookinginstructions.Model.DishItem;
 import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.R;
 
@@ -19,7 +20,6 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
     private Context context;
     private int resource;
     private ArrayList<Favorite> favoriteList;
-
     public FavoriteAdapter(Context context, int resource, ArrayList<Favorite> favoriteList) {
         super(context, resource, favoriteList);
         this.context = context;
@@ -34,8 +34,9 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
             convertView = inflater.inflate(resource, parent, false);
         }
 
+
         ImageView imgFavorite = convertView.findViewById(R.id.imgFavorite);
-        TextView tvFavoriteTitle = convertView.findViewById(R.id.tvFavoriteTitle);
+        TextView tvFavoriteTitle = convertView.findViewById(R.id.imgTop);
 
         Favorite favorite = favoriteList.get(position);
 

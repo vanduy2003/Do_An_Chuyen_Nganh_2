@@ -18,7 +18,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -60,7 +59,6 @@ public class Activity_Home extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,16 +163,43 @@ public class Activity_Home extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Xử lý các mục menu tại đây
-                if (item.getItemId() == R.id.menu_Settings) {
-                    Toast.makeText(Activity_Home.this, "Settings", Toast.LENGTH_SHORT).show();
+                if (item.getItemId() == R.id.menu_Tym) {
+                    Intent intent = new Intent(Activity_Home.this, Activity_Favorite.class);
+                    intent.putExtra("UserId", userId); // Truyền userId qua Intent
+                    startActivity(intent);
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return true; // Trả về true nếu đã xử lý
 
                 } else if (item.getItemId() == R.id.menu_Share) {
                     Toast.makeText(Activity_Home.this, "Share", Toast.LENGTH_SHORT).show();
+                    // Chia sẻ ứng dụng
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    String shareMessage = "Tải ứng dụng của chúng tôi tại: https://www.amazon.com/gp/product/B0DJ1NGCKH";
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Ứng dụng hay dành cho bạn");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "Chia sẻ ứng dụng qua"));
+
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return true;
+                } else if (item.getItemId() == R.id.menu_Evaluate) {
+                    Toast.makeText(Activity_Home.this, "Đánh giá", Toast.LENGTH_SHORT).show();
+                    // Đánh giá ứng dụng
+                    Intent evaluateIntent = new Intent(Intent.ACTION_VIEW);
+                    evaluateIntent.setData(android.net.Uri.parse("https://www.amazon.com/gp/product/B0DJ1NGCKH"));
+                    startActivity(evaluateIntent);
+
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_Clause) {
+                    Toast.makeText(Activity_Home.this, "Đánh giá", Toast.LENGTH_SHORT).show();
+                    // Điều khoản sử dụng
+                    Intent clauseIntent = new Intent(Intent.ACTION_VIEW);
+                    clauseIntent.setData(android.net.Uri.parse("https://www.freeprivacypolicy.com/live/8e8a6b8c-1c82-4e35-a1bc-d7c1477e0d9d"));
+                    startActivity(clauseIntent);
                 }
+
+
                 return false; // Trả về false nếu không xử lý được mục nào
             }
         });

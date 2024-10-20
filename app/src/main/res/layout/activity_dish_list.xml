@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD5D5"
+    android:background="#232323"
     tools:context="nhom12.eauta.cookinginstructions.Controller.Activity_Home">
 
     <!-- Phần thanh tìm kiếm -->

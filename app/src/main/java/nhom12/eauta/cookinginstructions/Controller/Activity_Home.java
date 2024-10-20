@@ -44,11 +44,19 @@ public class Activity_Home extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference categoriesRef;
     EditText txtSearch;
-    private TextView btnAcc, btnFavorite, btnMeoHay;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     private ImageButton btnMenu;
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+
+
 
 
     @Override
@@ -78,6 +86,14 @@ public class Activity_Home extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        // Khởi tạo màu sắc
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, arrCategories);
         gvCatagory = findViewById(R.id.gvDishList);
         gvCatagory.setAdapter(catagoryAdapter);
@@ -86,6 +102,7 @@ public class Activity_Home extends AppCompatActivity {
         btnMenu = findViewById(R.id.btnMenu);
         btnAcc = findViewById(R.id.btnAcount);
         btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
         gvTopSearch = findViewById(R.id.gvTopSearch);
 
         btnMenu.setOnClickListener(view -> {
@@ -96,8 +113,6 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
 
-
-
         loadCategories();
         LoadTopSearch();
 
@@ -105,14 +120,23 @@ public class Activity_Home extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
 
-        // Mẹo hay
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(Activity_Home.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
         btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorMeoHay);
             Intent intent = new Intent(Activity_Home.this, GoodTips.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
         // Khi người dùng nhấn nút tài khoản
         btnAcc.setOnClickListener(view -> {
+            changeButtonColor(btnAcc, colorAcc);
             if (userId != null) {
                 Intent intent = new Intent(Activity_Home.this, UpdateInfor.class);
                 intent.putExtra("userId", userId); // Truyền userId qua Intent
@@ -159,6 +183,7 @@ public class Activity_Home extends AppCompatActivity {
 
         // Khi người dùng nhấn nút yêu thích
         btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite, colorFavorite);
             Intent intent = new Intent(Activity_Home.this, Activity_Favorite.class);
             intent.putExtra("UserId", userId); // Truyền userId qua Intent
             startActivity(intent);
@@ -210,6 +235,51 @@ public class Activity_Home extends AppCompatActivity {
             }
         });
     }
+
+    // màu cho menu
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+    }
+
+
 
     private void searchCategories(String query) {
         if (query.isEmpty()) {

@@ -10,17 +10,17 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.util.Arrays;
 import java.util.List;
 
-import nhom12.eauta.cookinginstructions.Adapter.GoodTipsAdapter;
-import nhom12.eauta.cookinginstructions.R;  // Đảm bảo rằng bạn nhập đúng gói chứa file R
+import nhom12.eauta.cookinginstructions.Adapter.SecretAdapter;
+import nhom12.eauta.cookinginstructions.R;
 
-public class GoodTips extends AppCompatActivity {
+public class Secret extends AppCompatActivity {
     private ViewPager2 viewPager;
     ImageView btnThoat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_good_tips);
+        setContentView(R.layout.activity_secret);
         viewPager = findViewById(R.id.banner_goodtips);
         List<Integer> bannerList = Arrays.asList(
                 R.drawable.banner4,
@@ -28,7 +28,7 @@ public class GoodTips extends AppCompatActivity {
                 R.drawable.img_1
         );
 
-        GoodTipsAdapter adapter = new GoodTipsAdapter(bannerList);
+        SecretAdapter adapter = new SecretAdapter(bannerList);
         viewPager.setAdapter(adapter);
 
         // Tự động chuyển ảnh sau mỗi 3 giây
@@ -42,7 +42,7 @@ public class GoodTips extends AppCompatActivity {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, true);
-                handler.postDelayed(this, 2000); // Chuyển ảnh sau 2  giây
+                handler.postDelayed(this, 2000); // Chuyển ảnh sau 2 giây
             }
         };
         handler.postDelayed(runnable, 2000);

@@ -33,8 +33,6 @@ public class UpdateInfor extends AppCompatActivity {
     ImageView imgAvatar;
     TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday;
     ImageView btnThoat, btnSetting;
-    Button  btnDangxuat;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class UpdateInfor extends AppCompatActivity {
         txtBirthday = findViewById(R.id.txtBirthday);
         imgAvatar = findViewById(R.id.imgAvatar);
         txtSex = findViewById(R.id.txtSex);
-        btnDangxuat = findViewById(R.id.btnDangxuat);
         btnSetting = findViewById(R.id.btnSetting);
 
 
@@ -63,7 +60,7 @@ public class UpdateInfor extends AppCompatActivity {
         progressDialog.setMessage("Đang tải...");
         progressDialog.show();
 
-        // Thêm mã cho btnSetting
+        // Thêm xử lý cho btnSetting
         btnSetting.setOnClickListener(v -> {
             // Tạo PopupMenu
             PopupMenu popupMenu = new PopupMenu(UpdateInfor.this, btnSetting);
@@ -77,6 +74,20 @@ public class UpdateInfor extends AppCompatActivity {
                     intent.putExtra("userId", getIntent().getStringExtra("userId"));
                     startActivity(intent);
                     return true; // Trả về true nếu xử lý thành công
+                } else if (item.getItemId() == R.id.btnDangxuat) {
+                    // Xử lý đăng xuất
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Xác nhận");
+                    builder.setMessage("Bạn có muốn đăng xuất không?");
+                    builder.setIcon(R.mipmap.cooking);
+                    builder.setPositiveButton("Có", (dialog, which) -> {
+                        Intent intent = new Intent(UpdateInfor.this, MainActivity.class);
+                        startActivity(intent);
+                        finish(); // Kết thúc activity hiện tại
+                    });
+                    builder.setNegativeButton("Không", (dialog, which) -> dialog.cancel());
+                    builder.create().show();
+                    return true;
                 }
                 return false; // Trả về false nếu không xử lý
             });
@@ -84,6 +95,7 @@ public class UpdateInfor extends AppCompatActivity {
             // Hiển thị menu
             popupMenu.show();
         });
+
 
         // Truy vấn dữ liệu từ Firebase
         userRef.addValueEventListener(new ValueEventListener() {
@@ -123,30 +135,6 @@ public class UpdateInfor extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(UpdateInfor.this, "Lỗi: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-
-        btnDangxuat.setOnClickListener(v -> {
-            // Tao Dialog xac nhan thoat
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Xác nhận");
-            builder.setMessage("Bạn có muốn đăng xuất không?");
-            builder.setIcon(R.mipmap.cooking);
-            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Gọi super.onBackPressed() sau khi người dùng xác nhận thoát
-                    Intent intent = new Intent(UpdateInfor.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel(); // Đóng dialog nếu chọn "Không"
-                }
-            });
-            builder.create().show();
         });
 
         btnThoat.setOnClickListener(v -> finish());

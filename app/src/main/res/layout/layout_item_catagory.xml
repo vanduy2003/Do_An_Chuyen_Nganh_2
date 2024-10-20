@@ -38,13 +38,14 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:ellipsize="end"
+                    android:fontFamily="cursive"
                     android:gravity="center"
                     android:maxLines="2"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="Title"
                     android:textColor="#FF0000"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

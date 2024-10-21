@@ -42,10 +42,10 @@ public class GoodTips extends AppCompatActivity {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, true);
-                handler.postDelayed(this, 2000); // Chuyển ảnh sau 2  giây
+                handler.postDelayed(this, 3000); // Chuyển ảnh sau 2  giây
             }
         };
-        handler.postDelayed(runnable, 2000);
+        handler.postDelayed(runnable, 3000);
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> finish());
     }

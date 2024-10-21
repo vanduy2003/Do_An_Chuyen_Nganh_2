@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import nhom12.eauta.cookinginstructions.Model.CatagoryItem;
-import nhom12.eauta.cookinginstructions.Model.DishItem;
 import nhom12.eauta.cookinginstructions.R;
 
 public class TopAdapter extends ArrayAdapter<CatagoryItem> {
@@ -36,8 +35,8 @@ public class TopAdapter extends ArrayAdapter<CatagoryItem> {
 
         CatagoryItem catagoryItem = arr.get(position);
 
-        ImageView imgTop = convertView.findViewById(R.id.imgTop);
-        TextView tvTopTitle = convertView.findViewById(R.id.tvTopTitle);
+        ImageView imgTop = convertView.findViewById(R.id.imgTipss);
+        TextView tvTopTitle = convertView.findViewById(R.id.txtTipsTitle);
 
         tvTopTitle.setText(catagoryItem.getName());
         Glide.with(context).load(catagoryItem.getImage()).into(imgTop);

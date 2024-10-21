@@ -42,12 +42,12 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
+        android:id="@+id/lvTipsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#232323"
-        app:layout_constraintTop_toBottomOf="@+id/banner_goodtips"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner_goodtips" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

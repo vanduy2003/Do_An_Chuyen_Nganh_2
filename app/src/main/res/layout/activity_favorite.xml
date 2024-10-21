@@ -8,7 +8,6 @@
     android:background="#000000"
     tools:context="nhom12.eauta.cookinginstructions.Controller.Activity_Favorite">
 
-
     <LinearLayout
         android:id="@+id/line_header"
         android:layout_width="match_parent"
@@ -40,8 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line_header"
+        android:layout_above="@id/navbar"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp" />
 
-</RelativeLayout>
+    <include
+        android:id="@+id/navbar"
+        layout="@layout/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" /> <!-- Đảm bảo navbar nằm ở dưới cùng -->
 
+</RelativeLayout>

@@ -2,10 +2,13 @@ package nhom12.eauta.cookinginstructions.Controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,7 +31,15 @@ public class Activity_Favorite extends AppCompatActivity {
     private DatabaseReference favoritesRef;
     private ArrayList<Favorite> favoriteList;
     private FavoriteAdapter adapter;
-    ImageView btnThoat;
+    ImageView btnThoat, btnRemove;
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+    private int colorCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +50,31 @@ public class Activity_Favorite extends AppCompatActivity {
         favoriteList = new ArrayList<>();
         adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList);
         lvFavorites.setAdapter(adapter);
+        btnCook = findViewById(R.id.btnCook);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
+        btnRemove = findViewById(R.id.btnRemove);
+
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+        colorCook = getResources().getColor(R.color.tim);
 
         // Lấy userId của người dùng hiện tại
         String userId = getIntent().getStringExtra("UserId");
+
+        // Kiểm tra userId trước khi gọi loadFavoriteRecipes
+        if (userId == null || userId.isEmpty()) {
+            Log.e("Activity_Favorite", "UserId is null or empty");
+            // Có thể hiển thị thông báo lỗi hoặc quay về Activity trước
+            finish(); // Hoặc thực hiện hành động nào đó
+            return;
+        }
 
         // Truy vấn các món ăn yêu thích từ Firebase dựa trên userId
         loadFavoriteRecipes(userId);
@@ -56,9 +89,46 @@ public class Activity_Favorite extends AppCompatActivity {
 
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> {
-           finish();
+            finish();
+        });
+
+        // Lấy userId từ SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+
+        // check gọi menu để chuyển trang
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(Activity_Favorite.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorFavorite);
+            Intent intent = new Intent(Activity_Favorite.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút tài khoản
+        btnAcc.setOnClickListener(view -> {
+            changeButtonColor(btnAcc, colorAcc);
+            if (userId != null) {
+                Intent intent = new Intent(Activity_Favorite.this, UpdateInfor.class);
+                intent.putExtra("userId", userId); // Truyền userId qua Intent
+                startActivity(intent);
+            } else {
+                Toast.makeText(Activity_Favorite.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCook.setOnClickListener(view -> {
+            changeButtonColor(btnCook, colorCook);
+            Intent intent = new Intent(Activity_Favorite.this, Activity_Home.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
         });
     }
+
 
 
     private void loadFavoriteRecipes(String userId) {
@@ -87,5 +157,53 @@ public class Activity_Favorite extends AppCompatActivity {
                 Log.w("Firebase", "loadFavoriteRecipes:onCancelled", databaseError.toException());
             }
         });
+    }
+
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnCook) {
+            btnCook.setBackgroundColor(defaultColor);
+            btnCook.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCook.setBackgroundColor(defaultColor);
+        btnCook.setTextColor(getResources().getColor(R.color.black));
     }
 }

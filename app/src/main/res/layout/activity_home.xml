@@ -75,14 +75,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
+                <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/Banner"
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
-                    app:layout_constraintBottom_toTopOf="@id/body"
-                    app:layout_constraintTop_toBottomOf="@id/header"
-                    app:srcCompat="@drawable/banner4"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toBottomOf="@id/linear_goodtips"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <GridView
                     android:id="@+id/gvDishList"
@@ -137,70 +136,12 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- Phần navbar cố định ở cuối màn hình -->
-        <LinearLayout
+        <include
             android:id="@+id/navbar"
+            layout="@layout/navbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/btnCook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/cookingtools"
-                android:gravity="center"
-                android:text="Nấu Ăn"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/btnFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/tym"
-                android:gravity="center"
-                android:text="Yêu Thích"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/btnMeoHay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/pan"
-                android:gravity="center"
-                android:text="Mẹo Hay"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/btnBiQuyet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/cooking"
-                android:gravity="center"
-                android:text="Bí Quyết"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/btnAcount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/accountmanager"
-                android:gravity="center"
-                android:text="Tài Khoản"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
-        </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

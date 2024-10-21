@@ -33,6 +33,14 @@ public class UpdateInfor extends AppCompatActivity {
     ImageView imgAvatar;
     TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday;
     ImageView btnThoat, btnSetting;
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+    private int colorCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,19 @@ public class UpdateInfor extends AppCompatActivity {
         imgAvatar = findViewById(R.id.imgAvatar);
         txtSex = findViewById(R.id.txtSex);
         btnSetting = findViewById(R.id.btnSetting);
+        btnCook = findViewById(R.id.btnCook);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
+
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+        colorCook = getResources().getColor(R.color.tim);
 
 
         String userId = getIntent().getStringExtra("userId");
@@ -138,5 +159,85 @@ public class UpdateInfor extends AppCompatActivity {
         });
 
         btnThoat.setOnClickListener(v -> finish());
+
+        // check gọi menu để chuyển trang
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(UpdateInfor.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorMeoHay);
+            Intent intent = new Intent(UpdateInfor.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite, colorFavorite);
+            Intent intent = new Intent(UpdateInfor.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+
+        btnCook.setOnClickListener(view -> {
+            changeButtonColor(btnCook, colorCook);
+            Intent intent = new Intent(UpdateInfor.this, Activity_Home.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
     }
+
+    // màu cho menu
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnCook) {
+            btnCook.setBackgroundColor(defaultColor);
+            btnCook.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCook.setBackgroundColor(defaultColor);
+        btnCook.setTextColor(getResources().getColor(R.color.black));
+    }
+
 }

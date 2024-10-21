@@ -11,7 +11,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:background="#FF8B3F"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/btnThoat"
@@ -21,7 +21,7 @@
             android:background="@drawable/baseline_arrow_back_24"/>
 
         <TextView
-            android:id="@+id/txtNameF"
+            android:id="@+id/txtMeoHay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -42,11 +42,12 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
+        android:id="@+id/lvTipsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/banner_goodtips"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner_goodtips" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

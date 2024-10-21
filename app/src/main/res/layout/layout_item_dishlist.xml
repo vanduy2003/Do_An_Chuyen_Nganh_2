@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:background="#993838"
                     android:ellipsize="end"
-                    android:fontFamily="cursive"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:gravity="center"
                     android:lines="2"
                     android:paddingTop="8dp"

@@ -4,5 +4,9 @@
     <color name="black">#000000</color>
     <color name="blue">#03A9F4</color>
     <color name="red">#EA3B4F</color>
-    <color name="white">#FDFDFD</color>
+    <color name="hong">#E29DED</color>
+    <color name="hongdam">#E6457C</color>
+    <color name="tim">#AD86F1</color>
+    <color name="xanhla">#7AE47E</color>
+    <color name="trang">#FFFFFF</color>
 </resources>

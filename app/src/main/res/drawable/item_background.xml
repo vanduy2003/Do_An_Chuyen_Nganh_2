@@ -4,5 +4,6 @@
     <stroke
         android:width="2dp"
         android:color="#FFFFFF"/> <!-- Màu viền -->
+
     <corners android:radius="10dp"/> <!-- Bán kính góc -->
 </shape>

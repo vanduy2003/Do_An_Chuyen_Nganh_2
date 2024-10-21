@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#03A9F4">
+        android:background="#FF9800">
         <ImageView
             android:id="@+id/btnThoat"
             android:layout_width="50dp"

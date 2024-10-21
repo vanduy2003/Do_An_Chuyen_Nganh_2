@@ -133,6 +133,4 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("userId", uid);
         editor.apply();
     }
-
-
 }

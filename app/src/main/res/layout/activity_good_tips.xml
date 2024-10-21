@@ -33,15 +33,13 @@
 
     </LinearLayout>
 
-    <ImageView
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/banner_goodtips"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:background="@drawable/banner4"
         app:layout_constraintTop_toBottomOf="@id/linear_goodtips"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
         android:layout_width="match_parent"

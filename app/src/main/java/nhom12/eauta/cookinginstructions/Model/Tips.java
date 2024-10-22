@@ -1,26 +1,20 @@
 package nhom12.eauta.cookinginstructions.Model;
 
+import java.util.List;
+
+
 public class Tips {
     private String id;
     private String title;
     private String imageUrl;
     private String description;
+    private String urlVideo;
+    private List<Step> steps;
 
+    // Constructor mặc định
     public Tips() {}
 
-    public Tips(String id, String title, String imageUrl) {
-        this.id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-    }
-
-    public Tips(String id, String title, String imageUrl, String description) {
-        this.id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.description = description;
-    }
-
+    // Getter và Setter
     public String getId() {
         return id;
     }
@@ -52,5 +46,20 @@ public class Tips {
     public void setDescription(String description) {
         this.description = description;
     }
-}
 
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public void setUrlVideo(String urlVideo) {
+        this.urlVideo = urlVideo;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+}

@@ -95,6 +95,14 @@ public class GoodTips extends AppCompatActivity {
         btnThoat = findViewById(R.id.btnThoat);
 
         loadTips();
+
+        lvTipsList.setOnItemClickListener((parent, view, position, id) -> {
+            Tips tips = arrTips.get(position);
+            Intent intent = new Intent(GoodTips.this, Activity_TipsDetail.class);
+            intent.putExtra("TipsId", tips.getId());
+            startActivity(intent);
+        });
+
         btnThoat.setOnClickListener(v -> finish());
         // Lấy userId từ SharedPreferences
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -144,7 +152,10 @@ public class GoodTips extends AppCompatActivity {
                 arrTips.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Tips tips = data.getValue(Tips.class);
-                    arrTips.add(tips);
+                    if (tips != null) {
+                        tips.setId(data.getKey()); // Set key làm id
+                        arrTips.add(tips);
+                    }
                 }
                 tipsAdapter = new TipsAdapter(GoodTips.this, R.layout.layout_item_meohay, arrTips);
                 lvTipsList.setAdapter(tipsAdapter);
@@ -156,6 +167,7 @@ public class GoodTips extends AppCompatActivity {
             }
         });
     }
+
     // màu cho menu
     private void changeButtonColor(TextView button, int color) {
         // Đặt màu nền

@@ -1,6 +1,7 @@
 package nhom12.eauta.cookinginstructions.Controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +37,17 @@ public class Activity_DishList extends AppCompatActivity {
     private DatabaseReference recipesRef;
     ImageView btnThoat;
     EditText txtSearch;
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+    private int colorCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +59,19 @@ public class Activity_DishList extends AppCompatActivity {
         txtSearch = findViewById(R.id.txtSearch);
         dishAdapter = new DishAdapter(this, R.layout.layout_item_dishlist, filteredList);
         gvDishList.setAdapter(dishAdapter);
+        btnCook = findViewById(R.id.btnCook);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
+
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+        colorCook = getResources().getColor(R.color.tim);
 
         // Nhận CategoryId từ Intent
         String categoryId = getIntent().getStringExtra("CategoryId");
@@ -83,6 +110,42 @@ public class Activity_DishList extends AppCompatActivity {
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> {
             finish();
+        });
+
+        // Lấy userId từ SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String userId = preferences.getString("userId", null);
+        // check gọi menu để chuyển trang
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(Activity_DishList.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorMeoHay);
+            Intent intent = new Intent(Activity_DishList.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút tài khoản
+        btnAcc.setOnClickListener(view -> {
+            changeButtonColor(btnAcc, colorAcc);
+            if (userId != null) {
+                Intent intent = new Intent(Activity_DishList.this, UpdateInfor.class);
+                intent.putExtra("userId", userId); // Truyền userId qua Intent
+                startActivity(intent);
+            } else {
+                Toast.makeText(Activity_DishList.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCook.setOnClickListener(view -> {
+            changeButtonColor(btnCook, colorCook);
+            Intent intent = new Intent(Activity_DishList.this, Activity_Home.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
         });
     }
 
@@ -128,6 +191,56 @@ public class Activity_DishList extends AppCompatActivity {
         }
         dishAdapter.notifyDataSetChanged(); // Cập nhật lại giao diện GridView
     }
+
+    // màu cho menu
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnCook) {
+            btnCook.setBackgroundColor(defaultColor);
+            btnCook.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCook.setBackgroundColor(defaultColor);
+        btnCook.setTextColor(getResources().getColor(R.color.black));
+    }
+
 
 }
 

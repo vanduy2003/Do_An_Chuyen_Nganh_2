@@ -27,18 +27,27 @@ import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.Model.Recipe;
 import nhom12.eauta.cookinginstructions.Model.Step;
 import nhom12.eauta.cookinginstructions.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Activity_RecipeDetail extends AppCompatActivity {
     private TextView tvIngredient, txtNameF, txtTitle, txtDesc, tvSteps,  txtTitleVideo;
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference recipeRef, favoriteRef;
-    ImageView btnThoat;
-    Button btnTym, btnShare;
+    ImageView btnThoat,btnShare;
+    //    Button btnTym;
     WebView webView;
     private String userId;
     private boolean isFavorite = false;  // Biến để theo dõi tình trạng yêu thích
     private String imageUrl;  // Lưu URL hình ảnh công thức
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+    private int colorCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,10 +62,22 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnThoat = findViewById(R.id.btnThoat);
         txtDesc = findViewById(R.id.txtDesc);
         txtTitle = findViewById(R.id.txtTitle);
-        txtTitleVideo = findViewById(R.id.txtTitleVideo1);
-        btnTym = findViewById(R.id.btnTym);
+        txtTitleVideo = findViewById(R.id.txtTitleVideo);
         btnShare = findViewById(R.id.btnShare);
         webView = findViewById(R.id.webView);
+        btnCook = findViewById(R.id.btnCook);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
+
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+        colorCook = getResources().getColor(R.color.tim);
 
         // Lấy userId từ SharedPreferences
         userId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("userId", null);
@@ -74,6 +95,44 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         });
 
         btnThoat.setOnClickListener(v -> finish());
+        // check gọi menu để chuyển trang
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(Activity_RecipeDetail.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorMeoHay);
+            Intent intent = new Intent(Activity_RecipeDetail.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút tài khoản
+        btnAcc.setOnClickListener(view -> {
+            changeButtonColor(btnAcc, colorAcc);
+            if (userId != null) {
+                Intent intent = new Intent(Activity_RecipeDetail.this, UpdateInfor.class);
+                intent.putExtra("userId", userId); // Truyền userId qua Intent
+                startActivity(intent);
+            } else {
+                Toast.makeText(Activity_RecipeDetail.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCook.setOnClickListener(view -> {
+            changeButtonColor(btnCook, colorCook);
+            Intent intent = new Intent(Activity_RecipeDetail.this, Activity_Home.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite, colorFavorite);
+            Intent intent = new Intent(Activity_RecipeDetail.this, Activity_Favorite.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
     }
 
     // Hàm chia sẻ công thức
@@ -110,6 +169,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         } else {
             Toast.makeText(Activity_RecipeDetail.this, "Không có ứng dụng nào hỗ trợ chia sẻ", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     // Hàm kiểm tra xem công thức đã có trong danh sách yêu thích chưa
@@ -120,24 +180,24 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         favoriteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Nếu đã có trong yêu thích
-                    btnTym.setText("Bỏ thích");
-                    isFavorite = true;  // Đánh dấu là đã yêu thích
-                } else {
-                    // Nếu chưa có, nút sẽ hiển thị "Thêm vào yêu thích"
-                    btnTym.setText("Yêu thích");
-                    isFavorite = false; // Đánh dấu là chưa yêu thích
-                }
-
-                // Gán sự kiện click cho btnTym sau khi kiểm tra trạng thái
-                btnTym.setOnClickListener(v -> {
-                    if (isFavorite) {
-                        removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
-                    } else {
-                        addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
-                    }
-                });
+//                if (dataSnapshot.exists()) {
+//                    // Nếu đã có trong yêu thích
+//                    btnTym.setText("Bỏ thích");
+//                    isFavorite = true;  // Đánh dấu là đã yêu thích
+//                } else {
+//                    // Nếu chưa có, nút sẽ hiển thị "Thêm vào yêu thích"
+//                    btnTym.setText("Yêu thích");
+//                    isFavorite = false; // Đánh dấu là chưa yêu thích
+//                }
+//
+//                // Gán sự kiện click cho btnTym sau khi kiểm tra trạng thái
+//                btnTym.setOnClickListener(v -> {
+//                    if (isFavorite) {
+//                        removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
+//                    } else {
+//                        addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
+//                    }
+//                });
             }
 
             @Override
@@ -257,7 +317,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
 
                     favoriteRef.setValue(favoriteRecipe).addOnSuccessListener(aVoid -> {
                         Toast.makeText(Activity_RecipeDetail.this, "Đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
-                        btnTym.setText("Bỏ thích");
+//                        btnTym.setText("Bỏ thích");
                         isFavorite = true;  // Cập nhật trạng thái sau khi thêm
                     }).addOnFailureListener(e -> {
                         Toast.makeText(Activity_RecipeDetail.this, "Thêm vào món yêu thích thất bại", Toast.LENGTH_SHORT).show();
@@ -277,10 +337,60 @@ public class Activity_RecipeDetail extends AppCompatActivity {
 
         favoriteRef.removeValue().addOnSuccessListener(aVoid -> {
             Toast.makeText(Activity_RecipeDetail.this, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
-            btnTym.setText("Yêu thích");
+//            btnTym.setText("Yêu thích");
             isFavorite = false;  // Cập nhật trạng thái sau khi xóa
         }).addOnFailureListener(e -> {
             Toast.makeText(Activity_RecipeDetail.this, "Bỏ thích thất bại", Toast.LENGTH_SHORT).show();
         });
     }
+
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnCook) {
+            btnCook.setBackgroundColor(defaultColor);
+            btnCook.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+
+        btnCook.setBackgroundColor(defaultColor);
+        btnCook.setTextColor(getResources().getColor(R.color.black));
+    }
+
 }

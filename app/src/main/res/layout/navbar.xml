@@ -1,0 +1,68 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/btnCook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/cookingtools"
+        android:gravity="center"
+        android:text="Nấu Ăn"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/btnFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/tym"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Yêu Thích"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/btnMeoHay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/pan"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="Mẹo Hay"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/btnBiQuyet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/cooking"
+        android:gravity="center"
+        android:text="Bí Quyết"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/btnAcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/accountmanager"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Tài Khoản"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+</LinearLayout>

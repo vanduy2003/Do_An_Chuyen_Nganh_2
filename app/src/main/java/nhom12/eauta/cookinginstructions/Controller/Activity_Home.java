@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -29,13 +31,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import nhom12.eauta.cookinginstructions.Adapter.CatagoryAdapter;
+import nhom12.eauta.cookinginstructions.Adapter.SecretAdapter;
 import nhom12.eauta.cookinginstructions.Adapter.TopAdapter;
 import nhom12.eauta.cookinginstructions.Model.CatagoryItem;
 import nhom12.eauta.cookinginstructions.R;
 
 public class Activity_Home extends AppCompatActivity {
+    private ViewPager2 viewPager;
     GridView gvCatagory, gvTopSearch;
     CatagoryAdapter catagoryAdapter;
     TopAdapter topAdapter;
@@ -231,9 +237,37 @@ public class Activity_Home extends AppCompatActivity {
                 }
 
 
+
                 return false; // Trả về false nếu không xử lý được mục nào
             }
         });
+
+        // chuyển động banner
+        viewPager = findViewById(R.id.Banner);
+        List<Integer> bannerList = Arrays.asList(
+                R.drawable.banner4,
+                R.drawable.img_3,
+                R.drawable.img_1
+        );
+
+        SecretAdapter adapter = new SecretAdapter(bannerList);
+        viewPager.setAdapter(adapter);
+
+        // Tự động chuyển ảnh sau mỗi 5 giây
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            int currentPage = 0;
+
+            @Override
+            public void run() {
+                if (currentPage == bannerList.size()) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+                handler.postDelayed(this, 5000); // Chuyển ảnh sau 2 giây
+            }
+        };
+        handler.postDelayed(runnable, 5000);
     }
 
     // màu cho menu

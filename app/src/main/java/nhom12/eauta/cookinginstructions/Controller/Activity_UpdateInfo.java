@@ -1,11 +1,16 @@
 package nhom12.eauta.cookinginstructions.Controller;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,12 +27,23 @@ import nhom12.eauta.cookinginstructions.R;
 
 public class Activity_UpdateInfo extends AppCompatActivity {
 
-    private EditText emailEditText, phoneEditText, passwordEditText, addressEditText, usernameEditText, avatarUrlEditText, txtBio, txtSex, txtBirthday;
+    private EditText emailEditText, phoneEditText, passwordEditText, addressEditText, usernameEditText, txtBio, txtSex, txtBirthday;
     private DatabaseReference mDatabase;
     private String userId;
-    private String avatarUrl; // Thay đổi: Thêm biến để lưu URL ảnh đại diện
+    private ImageView imgAvatar; // Thay đổi: Thêm biến để lưu URL ảnh đại diện
     ImageView btnThoat;
     Button saveButton;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private int defaultColor;
+    private int colorAcc;
+    private int colorFavorite;
+    private int colorMeoHay;
+    private int colorBiQuyet;
+    private int textColor;
+    private int colorCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -44,12 +60,29 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         addressEditText = findViewById(R.id.addressEditText);
         usernameEditText = findViewById(R.id.usernameEditText);
         txtBio = findViewById(R.id.txtBio);
-        avatarUrlEditText = findViewById(R.id.avatarUrlEditText);
         saveButton = findViewById(R.id.saveButton);
         btnThoat = findViewById(R.id.btnThoat);
         txtBirthday = findViewById(R.id.txtBirthday);
         txtSex = findViewById(R.id.txtSex);
+        imgAvatar = findViewById(R.id.imgAvatar);
+        btnCook = findViewById(R.id.btnCook);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnMeoHay = findViewById(R.id.btnMeoHay);
+        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnAcc = findViewById(R.id.btnAcount);
 
+        defaultColor = getResources().getColor(R.color.trang);
+        colorAcc = getResources().getColor(R.color.hong);
+        colorFavorite = getResources().getColor(R.color.xanhla);
+        colorMeoHay = getResources().getColor(R.color.hongdam);
+        colorBiQuyet = getResources().getColor(R.color.blue);
+        textColor = getResources().getColor(R.color.trang);
+        colorCook = getResources().getColor(R.color.tim);
+
+
+
+        // Thêm sự kiện click cho imgAvatar
+        imgAvatar.setOnClickListener(v -> openGallery());
         // Get the userId from the Intent
         userId = getIntent().getStringExtra("userId");
 
@@ -67,7 +100,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                     String password = dataSnapshot.child("password").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     String username = dataSnapshot.child("username").getValue(String.class);
-                    String avatarUrl = dataSnapshot.child("avatar").getValue(String.class);
+//                    String avatarUrl = dataSnapshot.child("avatar").getValue(String.class);
                     String bio = dataSnapshot.child("favoritefood").getValue(String.class);
                     String sex = dataSnapshot.child("sex").getValue(String.class);
                     String birthday = dataSnapshot.child("birthday").getValue(String.class);
@@ -79,7 +112,6 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                     addressEditText.setText(address);
                     usernameEditText.setText(username);
                     txtBio.setText(bio);
-                    avatarUrlEditText.setText(avatarUrl);
                     txtSex.setText(sex);
                     txtBirthday.setText(birthday);
                 } else {
@@ -103,6 +135,45 @@ public class Activity_UpdateInfo extends AppCompatActivity {
 
         // Close button listener
         btnThoat.setOnClickListener(v -> finish());
+        btnThoat.setOnClickListener(v -> finish());
+        // check gọi menu để chuyển trang
+        // bí quyết
+        btnBiQuyet.setOnClickListener(view -> {
+            changeButtonColor(btnBiQuyet,colorBiQuyet);
+            Intent intent = new Intent(Activity_UpdateInfo.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút mẹo hay
+        btnMeoHay.setOnClickListener(view -> {
+            changeButtonColor(btnMeoHay, colorMeoHay);
+            Intent intent = new Intent(Activity_UpdateInfo.this, GoodTips.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // Khi người dùng nhấn nút tài khoản
+        btnAcc.setOnClickListener(view -> {
+            changeButtonColor(btnAcc, colorAcc);
+            if (userId != null) {
+                Intent intent = new Intent(Activity_UpdateInfo.this, UpdateInfor.class);
+                intent.putExtra("userId", userId); // Truyền userId qua Intent
+                startActivity(intent);
+            } else {
+                Toast.makeText(Activity_UpdateInfo.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnCook.setOnClickListener(view -> {
+            changeButtonColor(btnCook, colorCook);
+            Intent intent = new Intent(Activity_UpdateInfo.this, Activity_Home.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite, colorFavorite);
+            Intent intent = new Intent(Activity_UpdateInfo.this, Activity_Favorite.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
     }
 
     private void updateUserData() {
@@ -111,7 +182,6 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
         String address = addressEditText.getText().toString().trim();
         String username = usernameEditText.getText().toString().trim();
-        String avatarUrl = avatarUrlEditText.getText().toString().trim();
         String bio = txtBio.getText().toString().trim();
         String sex = txtSex.getText().toString().trim();
         String birthday = txtBirthday.getText().toString().trim();
@@ -122,7 +192,6 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         mDatabase.child("password").setValue(password);
         mDatabase.child("address").setValue(address);
         mDatabase.child("username").setValue(username);
-        mDatabase.child("avatar").setValue(avatarUrl);
         mDatabase.child("sex").setValue(sex);
         mDatabase.child("birthday").setValue(birthday);
         mDatabase.child("favoritefood").setValue(bio)
@@ -152,7 +221,77 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         // Thêm các kiểm tra khác nếu cần
         return true;
     }
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            if (imageUri != null) {
+                try {
+                    // Chuyển đổi URI thành Bitmap để hiển thị
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    imgAvatar.setImageBitmap(bitmap);
+                    // Lưu URI vào biến để sử dụng khi cần
+                    // (bạn có thể thêm một biến để lưu URL ảnh ở đây)
+                } catch (Exception e) {
+                    Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
+    private void changeButtonColor(TextView button, int color) {
+        // Đặt màu nền
+        button.setBackgroundColor(color);
+        // Đặt màu chữ thành trắng
+        button.setTextColor(textColor);
+
+        // Khôi phục lại màu sắc và chữ cho các nút khác
+        if (button != btnAcc) {
+            btnAcc.setBackgroundColor(defaultColor);
+            btnAcc.setTextColor(getResources().getColor(R.color.black)); // Màu chữ mặc định
+        }
+        if (button != btnFavorite) {
+            btnFavorite.setBackgroundColor(defaultColor);
+            btnFavorite.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnMeoHay) {
+            btnMeoHay.setBackgroundColor(defaultColor);
+            btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnBiQuyet) {
+            btnBiQuyet.setBackgroundColor(defaultColor);
+            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        }
+        if (button != btnCook) {
+            btnCook.setBackgroundColor(defaultColor);
+            btnCook.setTextColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Khôi phục màu sắc và chữ mặc định cho các nút
+        btnAcc.setBackgroundColor(defaultColor);
+        btnAcc.setTextColor(getResources().getColor(R.color.black)); // Đặt màu chữ mặc định
+
+        btnFavorite.setBackgroundColor(defaultColor);
+        btnFavorite.setTextColor(getResources().getColor(R.color.black));
+
+        btnMeoHay.setBackgroundColor(defaultColor);
+        btnMeoHay.setTextColor(getResources().getColor(R.color.black));
+
+        btnBiQuyet.setBackgroundColor(defaultColor);
+        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+
+        btnCook.setBackgroundColor(defaultColor);
+        btnCook.setTextColor(getResources().getColor(R.color.black));
+    }
 }
 

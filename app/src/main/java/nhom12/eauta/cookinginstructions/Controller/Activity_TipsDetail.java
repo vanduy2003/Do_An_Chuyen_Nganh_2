@@ -44,7 +44,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
         txtNameF = findViewById(R.id.txtNameF);
         txtTitle = findViewById(R.id.txtTitle);
         txtDesc = findViewById(R.id.txtDesc);
-        txtTitleVideo = findViewById(R.id.txtTitleVideo1);
+        txtTitleVideo = findViewById(R.id.txtTitleVideo);
         layoutSteps = findViewById(R.id.layoutSteps);
         btnThoat = findViewById(R.id.btnThoat);
         btnTym = findViewById(R.id.btnTym);
@@ -69,7 +69,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
                     txtNameF.setText(tips.getTitle());
                     txtTitle.setText(tips.getTitle());
                     txtDesc.setText(tips.getDescription());
-                    txtTitleVideo.setText(tips.getTitle());
+
 
                     // Cấu hình WebView để hiển thị và phát video trong app
                     if (tips.getUrlVideo() != null && !tips.getUrlVideo().isEmpty()) {
@@ -96,6 +96,8 @@ public class Activity_TipsDetail extends AppCompatActivity {
                         // Tạo TextView cho mỗi bước
                         TextView stepTextView = new TextView(Activity_TipsDetail.this);
                         stepTextView.setText("Cách " + step.getStepNumber() + ": " + "\n" + " - " + step.getDescription());
+                        stepTextView.setTextSize(22);
+                        stepTextView.setPadding(0, 20, 0, 20);
                         layoutSteps.addView(stepTextView);
 
                         // Tạo ImageView cho hình ảnh mỗi bước (nếu cần)

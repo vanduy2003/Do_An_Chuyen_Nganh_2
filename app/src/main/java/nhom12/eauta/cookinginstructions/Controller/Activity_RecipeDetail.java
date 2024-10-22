@@ -34,8 +34,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference recipeRef, favoriteRef;
-    ImageView btnThoat,btnShare;
-    //    Button btnTym;
+    ImageView btnThoat,btnShare, btnTym;
     WebView webView;
     private String userId;
     private boolean isFavorite = false;  // Biến để theo dõi tình trạng yêu thích
@@ -70,6 +69,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnBiQuyet = findViewById(R.id.btnBiQuyet);
         btnAcc = findViewById(R.id.btnAcount);
+        btnTym = findViewById(R.id.btnTym);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -180,24 +180,24 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         favoriteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Nếu đã có trong yêu thích
+                if (dataSnapshot.exists()) {
+                    // Nếu đã có trong yêu thích
 //                    btnTym.setText("Bỏ thích");
-//                    isFavorite = true;  // Đánh dấu là đã yêu thích
-//                } else {
-//                    // Nếu chưa có, nút sẽ hiển thị "Thêm vào yêu thích"
+                    isFavorite = true;  // Đánh dấu là đã yêu thích
+                } else {
+                    // Nếu chưa có, nút sẽ hiển thị "Thêm vào yêu thích"
 //                    btnTym.setText("Yêu thích");
-//                    isFavorite = false; // Đánh dấu là chưa yêu thích
-//                }
-//
-//                // Gán sự kiện click cho btnTym sau khi kiểm tra trạng thái
-//                btnTym.setOnClickListener(v -> {
-//                    if (isFavorite) {
-//                        removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
-//                    } else {
-//                        addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
-//                    }
-//                });
+                    isFavorite = false; // Đánh dấu là chưa yêu thích
+                }
+
+                // Gán sự kiện click cho btnTym sau khi kiểm tra trạng thái
+                btnTym.setOnClickListener(v -> {
+                    if (isFavorite) {
+                        removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
+                    } else {
+                        addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
+                    }
+                });
             }
 
             @Override

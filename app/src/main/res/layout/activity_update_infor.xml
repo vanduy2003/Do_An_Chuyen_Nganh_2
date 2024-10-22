@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_2"
+    android:fitsSystemWindows="true"
     tools:context="nhom12.eauta.cookinginstructions.Controller.UpdateInfor">
 
     <!-- ScrollView bao bọc LinearLayout -->

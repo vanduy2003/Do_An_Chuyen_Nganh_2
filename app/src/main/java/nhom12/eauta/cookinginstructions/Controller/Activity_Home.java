@@ -62,9 +62,6 @@ public class Activity_Home extends AppCompatActivity {
     private int colorBiQuyet;
     private int textColor;
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {

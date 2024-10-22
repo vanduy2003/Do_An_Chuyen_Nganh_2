@@ -5,11 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,7 +36,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference recipeRef, favoriteRef;
-    ImageView btnThoat,btnShare, btnTym;
+    ImageView btnThoat, btnThreeDots ;
     WebView webView;
     private String userId;
     private boolean isFavorite = false;  // Biến để theo dõi tình trạng yêu thích
@@ -47,6 +49,8 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private int textColor;
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+    private String recipeId;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,14 +66,13 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         txtDesc = findViewById(R.id.txtDesc);
         txtTitle = findViewById(R.id.txtTitle);
         txtTitleVideo = findViewById(R.id.txtTitleVideo);
-        btnShare = findViewById(R.id.btnShare);
         webView = findViewById(R.id.webView);
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnBiQuyet = findViewById(R.id.btnBiQuyet);
         btnAcc = findViewById(R.id.btnAcount);
-        btnTym = findViewById(R.id.btnTym);
+        btnThreeDots = findViewById(R.id.btn_threedots);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -86,13 +89,16 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         loadRecipeDetails(recipeId);
         checkFavoriteStatus(recipeId);
 
-        // Sự kiện click cho nút "Chia sẻ"
-        btnShare.setOnClickListener(new View.OnClickListener() {
+        // Thiết lập OnClickListener cho btnThreeDots
+        btnThreeDots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareRecipe();
+                // Hiển thị menu tùy chọn
+                showMenu(v, recipeId);
             }
         });
+
+
 
         btnThoat.setOnClickListener(v -> finish());
         // check gọi menu để chuyển trang
@@ -133,6 +139,27 @@ public class Activity_RecipeDetail extends AppCompatActivity {
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
+    }
+    // Hàm hiển thị menu tùy chọn
+    private void showMenu(View v, String recipeId) {
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_share_tym, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.btnShare) {
+                    shareRecipe();
+                    return true;
+                } else if (item.getItemId() == R.id.btnTym) {
+                    addRecipeToFavorites(recipeId);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        popupMenu.show();
     }
 
     // Hàm chia sẻ công thức
@@ -182,22 +209,12 @@ public class Activity_RecipeDetail extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // Nếu đã có trong yêu thích
-//                    btnTym.setText("Bỏ thích");
                     isFavorite = true;  // Đánh dấu là đã yêu thích
                 } else {
-                    // Nếu chưa có, nút sẽ hiển thị "Thêm vào yêu thích"
-//                    btnTym.setText("Yêu thích");
+                    // Nếu chưa có
                     isFavorite = false; // Đánh dấu là chưa yêu thích
                 }
-
-                // Gán sự kiện click cho btnTym sau khi kiểm tra trạng thái
-                btnTym.setOnClickListener(v -> {
-                    if (isFavorite) {
-                        removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
-                    } else {
-                        addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
-                    }
-                });
+                // Không gán sự kiện click ở đây nữa
             }
 
             @Override
@@ -206,6 +223,26 @@ public class Activity_RecipeDetail extends AppCompatActivity {
             }
         });
     }
+
+    // Phương thức xử lý lựa chọn menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.btnShare) {
+            shareRecipe();
+            return true;
+        } else if (item.getItemId() == R.id.btnTym) {
+            if (isFavorite) {
+                removeRecipeFromFavorites(recipeId);  // Xóa khỏi danh sách yêu thích
+            } else {
+                addRecipeToFavorites(recipeId);  // Thêm vào danh sách yêu thích
+            }
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 
     private void loadRecipeDetails(String recipeId) {
         database = FirebaseDatabase.getInstance();
@@ -300,6 +337,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         });
     }
 
+    // Hàm thêm công thức vào danh sách yêu thích
     private void addRecipeToFavorites(String recipeId) {
         recipeRef = database.getReference("Recipes").child(recipeId);
         favoriteRef = database.getReference("Favorites").child(userId).child(recipeId);
@@ -317,8 +355,6 @@ public class Activity_RecipeDetail extends AppCompatActivity {
 
                     favoriteRef.setValue(favoriteRecipe).addOnSuccessListener(aVoid -> {
                         Toast.makeText(Activity_RecipeDetail.this, "Đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
-//                        btnTym.setText("Bỏ thích");
-                        isFavorite = true;  // Cập nhật trạng thái sau khi thêm
                     }).addOnFailureListener(e -> {
                         Toast.makeText(Activity_RecipeDetail.this, "Thêm vào món yêu thích thất bại", Toast.LENGTH_SHORT).show();
                     });

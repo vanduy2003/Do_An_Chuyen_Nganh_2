@@ -64,6 +64,7 @@ public class Activity_DishList extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnBiQuyet = findViewById(R.id.btnBiQuyet);
         btnAcc = findViewById(R.id.btnAcount);
+        btnFavorite = findViewById(R.id.btnFavorite);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -120,6 +121,13 @@ public class Activity_DishList extends AppCompatActivity {
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
             Intent intent = new Intent(Activity_DishList.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // bí quyết
+        btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite,colorFavorite);
+            Intent intent = new Intent(Activity_DishList.this, Activity_Favorite.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

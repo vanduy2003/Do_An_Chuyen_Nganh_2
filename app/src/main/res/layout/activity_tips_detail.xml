@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="#FFFFFF">
 
     <!-- Thanh Nav nằm cố định ở đầu màn hình -->
@@ -37,43 +38,14 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/blue"
-                android:drawableLeft="@drawable/share"
-                android:text="Chia sẻ"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:typeface="normal"
-                app:cornerRadius="@dimen/cardview_default_radius" />
-
-            <Button
-                android:id="@+id/btnTym"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/blue"
-                android:drawableLeft="@drawable/heart"
-                android:text="Yêu thích"
-                android:textSize="24sp"
-                app:cornerRadius="@dimen/cardview_default_elevation" />
-        </LinearLayout>
     </LinearLayout>
 
     <!-- Phần nội dung có thể cuộn -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nav">
+        android:layout_below="@id/nav"
+        android:layout_above="@id/navbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -156,4 +128,10 @@
                 app:drawableBottomCompat="@drawable/tym" />
         </LinearLayout>
     </ScrollView>
+    <include
+        android:id="@+id/navbar"
+        layout="@layout/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

@@ -19,6 +19,7 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
     private Context context;
     private int resource;
     private ArrayList<Favorite> favoriteList;
+
     public FavoriteAdapter(Context context, int resource, ArrayList<Favorite> favoriteList) {
         super(context, resource, favoriteList);
         this.context = context;
@@ -33,7 +34,6 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
             convertView = inflater.inflate(resource, parent, false);
         }
 
-
         ImageView imgFavorite = convertView.findViewById(R.id.imgFavorite);
         TextView tvFavoriteTitle = convertView.findViewById(R.id.imgTipss);
 
@@ -43,5 +43,13 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
         Glide.with(context).load(favorite.getRecipeImageUrl()).into(imgFavorite);
 
         return convertView;
+    }
+
+    // Phương thức để xóa item
+    public void removeItem(int position) {
+        if (position >= 0 && position < favoriteList.size()) {
+            favoriteList.remove(position);
+            notifyDataSetChanged(); // Cập nhật giao diện
+        }
     }
 }

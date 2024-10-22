@@ -27,7 +27,6 @@ import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.Model.Recipe;
 import nhom12.eauta.cookinginstructions.Model.Step;
 import nhom12.eauta.cookinginstructions.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Activity_RecipeDetail extends AppCompatActivity {
     private TextView tvIngredient, txtNameF, txtTitle, txtDesc, tvSteps,  txtTitleVideo;
@@ -54,7 +53,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnThoat = findViewById(R.id.btnThoat);
         txtDesc = findViewById(R.id.txtDesc);
         txtTitle = findViewById(R.id.txtTitle);
-        txtTitleVideo = findViewById(R.id.txtTitleVideo);
+        txtTitleVideo = findViewById(R.id.txtTitleVideo1);
         btnTym = findViewById(R.id.btnTym);
         btnShare = findViewById(R.id.btnShare);
         webView = findViewById(R.id.webView);

@@ -15,34 +15,37 @@
         android:theme="@style/Theme.CookingInstructions"
         tools:targetApi="31">
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_UpdateInfo"
+            android:name=".Controller.Activity_TipsDetail"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Favorite"
+            android:name=".Controller.Activity_UpdateInfo"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.UpdateInfor"
+            android:name=".Controller.Activity_Favorite"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_RecipeDetail"
+            android:name=".Controller.UpdateInfor"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_DishList"
+            android:name=".Controller.Activity_RecipeDetail"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Home"
+            android:name=".Controller.Activity_DishList"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Activity_Register"
+            android:name=".Controller.Activity_Home"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.GoodTips"
+            android:name=".Controller.Activity_Register"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.Controller.Secret"
+            android:name=".Controller.GoodTips"
             android:exported="false" />
         <activity
-            android:name="nhom12.eauta.cookinginstructions.MainActivity"
+            android:name=".Controller.Secret"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

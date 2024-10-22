@@ -1,5 +1,6 @@
 package nhom12.eauta.cookinginstructions.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -69,6 +70,15 @@ public class GoodTips extends AppCompatActivity {
 
         loadTips();
 
+        lvTipsList.setOnItemClickListener((parent, view, position, id) -> {
+            Tips tipsSelect = arrTips.get(position);
+            Intent intent = new Intent(GoodTips.this, Activity_TipsDetail.class);
+            intent.putExtra("TipsId", tipsSelect.getId());
+            System.out.println("TipsId: " + tipsSelect.getId());
+            System.out.println(arrTips);
+            startActivity(intent);
+        });
+
         btnThoat.setOnClickListener(v -> finish());
     }
 
@@ -82,7 +92,10 @@ public class GoodTips extends AppCompatActivity {
                 arrTips.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Tips tips = data.getValue(Tips.class);
-                    arrTips.add(tips);
+                    if (tips != null) {
+                        tips.setId(data.getKey()); // Set key làm id
+                        arrTips.add(tips);
+                    }
                 }
                 tipsAdapter = new TipsAdapter(GoodTips.this, R.layout.layout_item_meohay, arrTips);
                 lvTipsList.setAdapter(tipsAdapter);
@@ -94,4 +107,5 @@ public class GoodTips extends AppCompatActivity {
             }
         });
     }
+
 }

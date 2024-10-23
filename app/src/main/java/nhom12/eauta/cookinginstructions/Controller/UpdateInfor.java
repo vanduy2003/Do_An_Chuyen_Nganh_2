@@ -158,7 +158,12 @@ public class UpdateInfor extends AppCompatActivity {
             }
         });
 
-        btnThoat.setOnClickListener(v -> finish());
+        btnThoat.setOnClickListener(v -> {
+            Intent intent = new Intent(UpdateInfor.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
+        });
 
         // check gọi menu để chuyển trang
         // bí quyết

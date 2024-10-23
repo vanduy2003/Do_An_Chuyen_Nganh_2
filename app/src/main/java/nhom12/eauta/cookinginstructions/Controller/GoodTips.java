@@ -103,8 +103,12 @@ public class GoodTips extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnThoat.setOnClickListener(v -> finish());
-        // Lấy userId từ SharedPreferences
+        btnThoat.setOnClickListener(v -> {
+            Intent intent = new Intent(GoodTips.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
+        });        // Lấy userId từ SharedPreferences
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
 

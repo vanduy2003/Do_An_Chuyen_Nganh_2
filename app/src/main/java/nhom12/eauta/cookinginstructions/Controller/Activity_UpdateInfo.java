@@ -134,9 +134,12 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         });
 
         // Close button listener
-        btnThoat.setOnClickListener(v -> finish());
-        btnThoat.setOnClickListener(v -> finish());
-        // check gọi menu để chuyển trang
+        btnThoat.setOnClickListener(v -> {
+            Intent intent = new Intent(Activity_UpdateInfo.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
+        });        // check gọi menu để chuyển trang
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);

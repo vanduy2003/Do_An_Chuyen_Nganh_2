@@ -30,6 +30,7 @@
                 android:layout_width="55dp"
                 android:layout_height="50dp"
                 android:background="#00000000"
+                android:padding="10dp"
                 android:backgroundTint="#FFFFFF"
                 app:srcCompat="@drawable/burger" />
 
@@ -43,7 +44,7 @@
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Tìm kiếm theo danh mục"
-                android:padding="6dp"
+                android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:typeface="serif" />

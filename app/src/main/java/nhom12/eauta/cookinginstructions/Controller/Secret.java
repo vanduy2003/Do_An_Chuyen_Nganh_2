@@ -72,7 +72,12 @@ public class Secret extends AppCompatActivity {
         };
         handler.postDelayed(runnable, 5000);
         btnThoat = findViewById(R.id.btnThoat);
-        btnThoat.setOnClickListener(v -> finish());
+        btnThoat.setOnClickListener(v -> {
+            Intent intent = new Intent(Secret.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
+        });
 
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);

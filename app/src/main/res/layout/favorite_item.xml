@@ -35,9 +35,9 @@
     <ImageView
         android:id="@+id/btnRemove"
         android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_height="47dp"
         android:layout_gravity="center"
-        android:background="@drawable/baseline_delete_24"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="3dp"
-        android:layout_marginLeft="10dp"/>
+        android:background="@drawable/baseline_delete_24" />
 </LinearLayout>

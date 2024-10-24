@@ -48,7 +48,7 @@ public class Activity_Favorite extends AppCompatActivity {
 
         lvFavorites = findViewById(R.id.lvFavorites);
         favoriteList = new ArrayList<>();
-        adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList);
+        adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList, "");
         lvFavorites.setAdapter(adapter);
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);
@@ -68,6 +68,8 @@ public class Activity_Favorite extends AppCompatActivity {
         // Lấy userId của người dùng hiện tại
         String userId = getIntent().getStringExtra("UserId");
 
+
+
         // Kiểm tra userId trước khi gọi loadFavoriteRecipes
         if (userId == null || userId.isEmpty()) {
             Log.e("Activity_Favorite", "UserId is null or empty");
@@ -75,6 +77,10 @@ public class Activity_Favorite extends AppCompatActivity {
             finish(); // Hoặc thực hiện hành động nào đó
             return;
         }
+
+        // Khởi tạo adapter với userId
+        adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList, userId);
+        lvFavorites.setAdapter(adapter);
 
         // Truy vấn các món ăn yêu thích từ Firebase dựa trên userId
         loadFavoriteRecipes(userId);
@@ -89,8 +95,12 @@ public class Activity_Favorite extends AppCompatActivity {
 
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> {
-            finish();
+            Intent intent = new Intent(Activity_Favorite.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
         });
+
 
         // Lấy userId từ SharedPreferences
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
@@ -127,8 +137,17 @@ public class Activity_Favorite extends AppCompatActivity {
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
-    }
 
+
+        lvFavorites.setOnItemClickListener((parent, view, position, id) -> {
+            Favorite favorite = favoriteList.get(position);
+            String recipeId = favorite.getRecipeId();
+            Intent intent = new Intent(Activity_Favorite.this, Activity_RecipeDetail.class);
+            intent.putExtra("RecipeId", recipeId);
+            startActivity(intent);
+        });
+
+    }
 
 
     private void loadFavoriteRecipes(String userId) {
@@ -158,6 +177,7 @@ public class Activity_Favorite extends AppCompatActivity {
             }
         });
     }
+
 
     private void changeButtonColor(TextView button, int color) {
         // Đặt màu nền

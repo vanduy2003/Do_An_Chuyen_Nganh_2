@@ -36,15 +36,14 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:background="#FF9800"
                     >
 
                     <ImageView
                         android:id="@+id/btnThoat"
-                        android:layout_marginLeft="10dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_weight="1"
                         android:background="@drawable/baseline_arrow_back_24" />
 
                     <TextView
@@ -62,10 +61,8 @@
 
                     <ImageView
                         android:id="@+id/btnSetting"
-                        android:layout_marginRight="20dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_weight="3"
                         android:background="@drawable/baseline_settings_24" />
 
                 </LinearLayout>

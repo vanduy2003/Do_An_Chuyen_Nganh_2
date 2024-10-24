@@ -64,6 +64,7 @@ public class Activity_DishList extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnBiQuyet = findViewById(R.id.btnBiQuyet);
         btnAcc = findViewById(R.id.btnAcount);
+        btnFavorite = findViewById(R.id.btnFavorite);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -109,7 +110,10 @@ public class Activity_DishList extends AppCompatActivity {
 
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> {
-            finish();
+            Intent intent = new Intent(Activity_DishList.this, Activity_Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
         });
 
         // Lấy userId từ SharedPreferences
@@ -120,6 +124,13 @@ public class Activity_DishList extends AppCompatActivity {
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
             Intent intent = new Intent(Activity_DishList.this, Secret.class);
+            intent.putExtra("UserId", userId);
+            startActivity(intent);
+        });
+        // bí quyết
+        btnFavorite.setOnClickListener(view -> {
+            changeButtonColor(btnFavorite,colorFavorite);
+            Intent intent = new Intent(Activity_DishList.this, Activity_Favorite.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <item
+        android:id="@+id/btnShare"
+        android:title="Chia Sẻ"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/btnTym"
+        android:icon="@drawable/tym"
+        android:title="Yêu thích"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+</menu>

@@ -25,9 +25,8 @@
 
             <ImageView
                 android:id="@+id/btnThoat"
-                android:layout_width="0dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:background="@drawable/baseline_arrow_back_24" />
 
             <TextView
@@ -47,40 +46,17 @@
                 android:ellipsize="end" />
 
             <ImageView
-                android:id="@+id/btnShare"
-                android:layout_marginRight="10dp"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/share" />
-
-
-            <ImageView
-                android:id="@+id/btnTym"
-                android:layout_marginRight="10dp"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/heart"
-                android:backgroundTint="@color/hongdam"/>
+                android:id="@+id/btn_threedots"
+                android:layout_width="10dp"
+                android:layout_height="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/there_dots"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="true" />
 
         </LinearLayout>
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-<!--            <Button-->
-<!--                android:id="@+id/btnTym"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:backgroundTint="@color/blue"-->
-<!--                android:drawableLeft="@drawable/heart"-->
-<!--                android:text="Yêu thích"-->
-<!--                android:textSize="24sp"-->
-<!--                app:cornerRadius="@dimen/cardview_default_elevation" />-->
-<!--        </LinearLayout>-->
+
     </LinearLayout>
 
     <!-- Phần nội dung có thể cuộn -->

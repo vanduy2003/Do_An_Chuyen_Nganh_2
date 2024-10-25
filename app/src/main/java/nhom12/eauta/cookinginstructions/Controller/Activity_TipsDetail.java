@@ -33,7 +33,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference tipsRef;
-    ImageView btnThoat;
+    ImageView btnThoat, btnZoomIn, btnZoomOut;
     WebView webView;
     private int defaultColor;
     private int colorAcc;
@@ -43,6 +43,9 @@ public class Activity_TipsDetail extends AppCompatActivity {
     private int textColor;
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+    // Khai báo kích thước chữ và giá trị tăng giảm
+    private float textSize = 16f; // Kích thước chữ mặc định
+    private final float zoomIncrement = 2f; // Giá trị thay đổi khi zoom
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,6 +75,8 @@ public class Activity_TipsDetail extends AppCompatActivity {
         colorBiQuyet = getResources().getColor(R.color.blue);
         textColor = getResources().getColor(R.color.trang);
         colorCook = getResources().getColor(R.color.tim);
+        btnZoomIn = findViewById(R.id.btnZoomIn);
+        btnZoomOut = findViewById(R.id.btnZoomOut);
 
         String tipsId = getIntent().getStringExtra("TipsId");
         loadTipsDetail(tipsId);
@@ -123,6 +128,34 @@ public class Activity_TipsDetail extends AppCompatActivity {
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
+        // Thiết lập OnClickListener cho nút zoom in
+        btnZoomIn.setOnClickListener(v -> {
+            textSize += zoomIncrement; // Tăng kích thước chữ
+            applyTextSize(); // Áp dụng kích thước chữ mới
+        });
+
+        // Thiết lập OnClickListener cho nút zoom out
+        btnZoomOut.setOnClickListener(v -> {
+            if (textSize > 10f) { // Kiểm tra kích thước chữ không nhỏ hơn 10
+                textSize -= zoomIncrement; // Giảm kích thước chữ
+                applyTextSize(); // Áp dụng kích thước chữ mới
+            }
+        });
+    }
+
+
+    // Phương thức áp dụng kích thước chữ
+    private void applyTextSize() {
+        txtNameF.setTextSize(textSize);
+        txtTitle.setTextSize(textSize);
+        txtDesc.setTextSize(textSize);
+        txtTitleVideo.setTextSize(textSize);
+        for (int i = 0; i < layoutSteps.getChildCount(); i++) {
+            View view = layoutSteps.getChildAt(i);
+            if (view instanceof TextView) {
+                ((TextView) view).setTextSize(textSize);
+            }
+        }
     }
     // màu cho menu
     private void changeButtonColor(TextView button, int color) {

@@ -16,12 +16,15 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import nhom12.eauta.cookinginstructions.R;
 
@@ -32,7 +35,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
     private String userId;
     private ImageView imgAvatar; // Thay đổi: Thêm biến để lưu URL ảnh đại diện
     ImageView btnThoat;
-    Button saveButton;
+    private Button saveButton;
     private static final int PICK_IMAGE_REQUEST = 1;
     private int defaultColor;
     private int colorAcc;
@@ -100,7 +103,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                     String password = dataSnapshot.child("password").getValue(String.class);
                     String address = dataSnapshot.child("address").getValue(String.class);
                     String username = dataSnapshot.child("username").getValue(String.class);
-//                    String avatarUrl = dataSnapshot.child("avatar").getValue(String.class);
+                    String avatarUrl = dataSnapshot.child("avatar").getValue(String.class);
                     String bio = dataSnapshot.child("favoritefood").getValue(String.class);
                     String sex = dataSnapshot.child("sex").getValue(String.class);
                     String birthday = dataSnapshot.child("birthday").getValue(String.class);
@@ -114,6 +117,14 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                     txtBio.setText(bio);
                     txtSex.setText(sex);
                     txtBirthday.setText(birthday);
+
+                    // Load ảnh đại diện từ URL
+                    if (avatarUrl != null) {
+                        // Load ảnh từ URL
+                        Glide.with(Activity_UpdateInfo.this)
+                                .load(avatarUrl)
+                                .into(imgAvatar);
+                    }
                 } else {
                     Toast.makeText(Activity_UpdateInfo.this, "User data not found", Toast.LENGTH_SHORT).show();
                 }
@@ -129,32 +140,27 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             if (isInputValid()) {
                 updateUserData();
+                System.out.println("Save button clicked");
             }
+
+        });
+
+        btnThoat.setOnClickListener(v -> {
             finish();
         });
 
-        // Close button listener
-        btnThoat.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_UpdateInfo.this, Activity_Home.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
-        });        // check gọi menu để chuyển trang
-        // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
             Intent intent = new Intent(Activity_UpdateInfo.this, Secret.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
-        // Khi người dùng nhấn nút mẹo hay
         btnMeoHay.setOnClickListener(view -> {
             changeButtonColor(btnMeoHay, colorMeoHay);
             Intent intent = new Intent(Activity_UpdateInfo.this, GoodTips.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
-        // Khi người dùng nhấn nút tài khoản
         btnAcc.setOnClickListener(view -> {
             changeButtonColor(btnAcc, colorAcc);
             if (userId != null) {
@@ -189,27 +195,39 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         String sex = txtSex.getText().toString().trim();
         String birthday = txtBirthday.getText().toString().trim();
 
-        // Update user data in Firebase
-        mDatabase.child("email").setValue(email);
-        mDatabase.child("phone").setValue(phone);
-        mDatabase.child("password").setValue(password);
-        mDatabase.child("address").setValue(address);
-        mDatabase.child("username").setValue(username);
-        mDatabase.child("sex").setValue(sex);
-        mDatabase.child("birthday").setValue(birthday);
-        mDatabase.child("favoritefood").setValue(bio)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Activity_UpdateInfo.this, "User data updated successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Activity_UpdateInfo.this, "Failed to update user data", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        // Update user data in Firebase Database
+        try {
+            // Update user data in Firebase
+            mDatabase.child("email").setValue(email);
+            mDatabase.child("phone").setValue(phone);
+            mDatabase.child("password").setValue(password);
+            mDatabase.child("address").setValue(address);
+            mDatabase.child("username").setValue(username);
+            mDatabase.child("sex").setValue(sex);
+            mDatabase.child("birthday").setValue(birthday);
+            mDatabase.child("favoritefood").setValue(bio)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Activity_UpdateInfo.this, "User data updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Activity_UpdateInfo.this, "Failed to update user data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }catch (Exception e){
+            Toast.makeText(Activity_UpdateInfo.this, "Failed to update user data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean isInputValid() {
         String phone = phoneEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+
+        // Password phải có ít nhất 6 ký tự
+        if (password.length() < 6) {
+            passwordEditText.setError("Mật khẩu phải có ít nhất 6 ký tự");
+            return false;
+        }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Email không hợp lệ");
@@ -232,21 +250,55 @@ public class Activity_UpdateInfo extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             if (imageUri != null) {
                 try {
-                    // Chuyển đổi URI thành Bitmap để hiển thị
+                    // Chuyển URI thành Bitmap để hiển thị trong ImageView
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                     imgAvatar.setImageBitmap(bitmap);
-                    // Lưu URI vào biến để sử dụng khi cần
-                    // (bạn có thể thêm một biến để lưu URL ảnh ở đây)
+
+                    // Upload ảnh lên Firebase Storage
+                    uploadImageToFirebase(imageUri);
+
                 } catch (Exception e) {
                     Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
+
+    // Thêm phương thức uploadImageToFirebase
+    private void uploadImageToFirebase(Uri imageUri) {
+        // Tạo đường dẫn trong Firebase Storage với userId
+        String fileName = "avatars/" + userId + ".jpg";
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child(fileName);
+
+        // Upload file lên Firebase Storage
+        storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            // Lấy URL của ảnh đã upload
+            storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                String downloadUrl = uri.toString();
+
+                // Cập nhật URL ảnh vào Firebase Database
+                mDatabase.child("avatarUrl").setValue(downloadUrl)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Activity_UpdateInfo.this, "Avatar updated successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Activity_UpdateInfo.this, "Failed to update avatar URL", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }).addOnFailureListener(e -> {
+                Toast.makeText(Activity_UpdateInfo.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(Activity_UpdateInfo.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+
 
     private void changeButtonColor(TextView button, int color) {
         // Đặt màu nền

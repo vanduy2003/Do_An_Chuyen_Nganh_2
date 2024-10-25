@@ -81,10 +81,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
 
         btnThoat = findViewById(R.id.btnThoat);
         btnThoat.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_TipsDetail.this, Activity_Home.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish(); // Hoặc gọi finish() nếu bạn muốn kết thúc Activity hiện tại
+            finish();
         });
 
         // Lấy userId từ SharedPreferences

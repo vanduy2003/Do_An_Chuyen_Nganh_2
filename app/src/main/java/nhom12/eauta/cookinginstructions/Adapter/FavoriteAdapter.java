@@ -66,14 +66,20 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
                 .child(recipeId); // Truy cập vào món ăn yêu thích cần xóa
 
         favoriteRef.removeValue().addOnSuccessListener(aVoid -> {
-            // Xóa thành công, cập nhật lại giao diện
-            favoriteList.remove(position);
-            notifyDataSetChanged();
-            Toast.makeText(context, "Đã xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
+            // Kiểm tra lại nếu vị trí hợp lệ trước khi xoá khỏi danh sách
+            if (position >= 0 && position < favoriteList.size()) {
+                // Xóa thành công, cập nhật lại giao diện
+                favoriteList.remove(position);
+                notifyDataSetChanged();
+                Toast.makeText(context, "Đã xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e("FavoriteAdapter", "Vị trí xoá không hợp lệ: " + position);
+            }
         }).addOnFailureListener(e -> {
             // Nếu xảy ra lỗi
             Log.e("FavoriteAdapter", "Lỗi khi xóa món ăn yêu thích", e);
             Toast.makeText(context, "Không thể xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
         });
     }
+
 }

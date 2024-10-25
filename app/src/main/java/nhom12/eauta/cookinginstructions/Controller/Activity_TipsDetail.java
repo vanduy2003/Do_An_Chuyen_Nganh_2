@@ -34,7 +34,6 @@ public class Activity_TipsDetail extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference tipsRef;
     ImageView btnThoat;
-    Button btnTym, btnShare;
     WebView webView;
     private int defaultColor;
     private int colorAcc;
@@ -58,8 +57,6 @@ public class Activity_TipsDetail extends AppCompatActivity {
         txtTitleVideo = findViewById(R.id.txtTitleVideo);
         layoutSteps = findViewById(R.id.layoutSteps);
         btnThoat = findViewById(R.id.btnThoat);
-//        btnTym = findViewById(R.id.btnTym);
-//        btnShare = findViewById(R.id.btnShare);
         webView = findViewById(R.id.webView);
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);

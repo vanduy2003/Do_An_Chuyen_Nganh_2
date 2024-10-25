@@ -251,7 +251,5 @@ public class Activity_DishList extends AppCompatActivity {
         btnCook.setBackgroundColor(defaultColor);
         btnCook.setTextColor(getResources().getColor(R.color.black));
     }
-
-
 }
 

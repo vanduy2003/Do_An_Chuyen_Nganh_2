@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.Model.Recipe;
 import nhom12.eauta.cookinginstructions.Model.Step;
 import nhom12.eauta.cookinginstructions.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Activity_RecipeDetail extends AppCompatActivity {
     private TextView tvIngredient, txtNameF, txtTitle, txtDesc, tvSteps,  txtTitleVideo;
@@ -110,7 +108,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(Activity_RecipeDetail.this, Secret.class);
+            Intent intent = new Intent(Activity_RecipeDetail.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

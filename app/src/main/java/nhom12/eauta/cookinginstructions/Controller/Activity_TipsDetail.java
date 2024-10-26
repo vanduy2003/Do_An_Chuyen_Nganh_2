@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -93,7 +92,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(Activity_TipsDetail.this, Secret.class);
+            Intent intent = new Intent(Activity_TipsDetail.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

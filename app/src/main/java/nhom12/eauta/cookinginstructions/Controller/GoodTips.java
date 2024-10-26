@@ -115,7 +115,7 @@ public class GoodTips extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(GoodTips.this, Secret.class);
+            Intent intent = new Intent(GoodTips.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

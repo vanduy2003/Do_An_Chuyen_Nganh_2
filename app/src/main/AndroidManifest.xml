@@ -44,7 +44,7 @@
             android:name=".Controller.GoodTips"
             android:exported="false" />
         <activity
-            android:name=".Controller.Secret"
+            android:name=".Controller.Activity_HandBook"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

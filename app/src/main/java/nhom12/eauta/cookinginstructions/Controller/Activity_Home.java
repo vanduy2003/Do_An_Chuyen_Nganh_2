@@ -126,7 +126,7 @@ public class Activity_Home extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(Activity_Home.this, Secret.class);
+            Intent intent = new Intent(Activity_Home.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

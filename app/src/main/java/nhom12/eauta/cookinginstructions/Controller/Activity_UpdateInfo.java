@@ -282,7 +282,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                 String downloadUrl = uri.toString();
 
                 // Cập nhật URL ảnh vào Firebase Database
-                mDatabase.child("avatarUrl").setValue(downloadUrl)
+                mDatabase.child("avatar").setValue(downloadUrl)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(Activity_UpdateInfo.this, "Avatar updated successfully", Toast.LENGTH_SHORT).show();

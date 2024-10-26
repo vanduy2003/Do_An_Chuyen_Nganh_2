@@ -129,6 +129,37 @@
                 app:drawableBottomCompat="@drawable/tym" />
         </LinearLayout>
     </ScrollView>
+    <!-- Nút zoom nằm nổi lên -->
+    <LinearLayout
+        android:id="@+id/btnZoomContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/navbar"
+        android:layout_margin="16dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/btnZoomOut"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_zoom_out_24"
+            android:background="@drawable/rounded_corner_background_left"
+            android:padding="10dp"
+            android:layout_marginEnd="4dp"
+            android:elevation="4dp"/>
+        <ImageView
+            android:id="@+id/btnZoomIn"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_zoom_in_24"
+            android:background="@drawable/rounded_corner_background"
+            android:padding="10dp"
+            android:layout_marginEnd="4dp"
+            android:elevation="4dp"
+            />
+    </LinearLayout>
     <include
         android:id="@+id/navbar"
         layout="@layout/navbar"

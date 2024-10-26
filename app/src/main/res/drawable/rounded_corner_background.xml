@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#80FFFFFF" /> <!-- Màu trắng với độ trong suốt 50% -->
+
+    <!-- Bo góc hoàn toàn bên phải -->
+    <corners
+        android:topRightRadius="300dp"
+        android:bottomRightRadius="300dp" /> <!-- Bán kính lớn cho góc bo tròn -->
+
+    <padding
+        android:left="16dp"
+        android:top="32dp"
+        android:right="16dp"
+        android:bottom="32dp" />
+</shape>

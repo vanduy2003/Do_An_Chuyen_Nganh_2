@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -29,14 +28,13 @@ import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.Model.Recipe;
 import nhom12.eauta.cookinginstructions.Model.Step;
 import nhom12.eauta.cookinginstructions.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Activity_RecipeDetail extends AppCompatActivity {
     private TextView tvIngredient, txtNameF, txtTitle, txtDesc, tvSteps,  txtTitleVideo;
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference recipeRef, favoriteRef;
-    ImageView btnThoat, btnThreeDots ;
+    ImageView btnThoat, btnThreeDots,btnZoomIn, btnZoomOut ;
     WebView webView;
     private String userId;
     private boolean isFavorite = false;  // Biến để theo dõi tình trạng yêu thích
@@ -50,6 +48,9 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
     private String recipeId;
+    // Khai báo kích thước chữ và giá trị tăng giảm
+    private float textSize = 16f; // Kích thước chữ mặc định
+    private final float zoomIncrement = 2f; // Giá trị thay đổi khi zoom
 
 
     @SuppressLint("MissingInflatedId")
@@ -81,6 +82,8 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         colorBiQuyet = getResources().getColor(R.color.blue);
         textColor = getResources().getColor(R.color.trang);
         colorCook = getResources().getColor(R.color.tim);
+        btnZoomIn = findViewById(R.id.btnZoomIn);
+        btnZoomOut = findViewById(R.id.btnZoomOut);
 
         // Lấy userId từ SharedPreferences
         userId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("userId", null);
@@ -105,7 +108,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(Activity_RecipeDetail.this, Secret.class);
+            Intent intent = new Intent(Activity_RecipeDetail.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
@@ -139,6 +142,35 @@ public class Activity_RecipeDetail extends AppCompatActivity {
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });
+        // Thiết lập OnClickListener cho nút zoom in
+        btnZoomIn.setOnClickListener(v -> {
+            textSize += zoomIncrement; // Tăng kích thước chữ
+            applyTextSize(); // Áp dụng kích thước chữ mới
+        });
+
+        // Thiết lập OnClickListener cho nút zoom out
+        btnZoomOut.setOnClickListener(v -> {
+            if (textSize > 10f) { // Kiểm tra kích thước chữ không nhỏ hơn 10
+                textSize -= zoomIncrement; // Giảm kích thước chữ
+                applyTextSize(); // Áp dụng kích thước chữ mới
+            }
+        });
+    }
+
+    // Phương thức áp dụng kích thước chữ
+    private void applyTextSize() {
+        txtNameF.setTextSize(textSize);
+        txtDesc.setTextSize(textSize);
+        tvIngredient.setTextSize(textSize);
+        tvSteps.setTextSize(textSize);
+        txtTitleVideo.setTextSize(textSize);
+        txtTitle.setTextSize(textSize);
+        for (int i = 0; i < layoutSteps.getChildCount(); i++) {
+            View view = layoutSteps.getChildAt(i);
+            if (view instanceof TextView) {
+                ((TextView) view).setTextSize(textSize);
+            }
+        }
     }
     // Hàm hiển thị menu tùy chọn
     private void showMenu(View v, String recipeId) {

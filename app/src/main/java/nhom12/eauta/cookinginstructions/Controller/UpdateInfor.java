@@ -3,13 +3,8 @@ package nhom12.eauta.cookinginstructions.Controller;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -18,7 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -166,7 +160,7 @@ public class UpdateInfor extends AppCompatActivity {
         // bí quyết
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(UpdateInfor.this, Secret.class);
+            Intent intent = new Intent(UpdateInfor.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

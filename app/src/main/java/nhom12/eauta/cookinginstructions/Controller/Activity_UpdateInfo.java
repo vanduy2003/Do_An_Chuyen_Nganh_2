@@ -17,7 +17,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -142,7 +141,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
                 updateUserData();
                 System.out.println("Save button clicked");
             }
-
+            finish();
         });
 
         btnThoat.setOnClickListener(v -> {
@@ -151,7 +150,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
 
         btnBiQuyet.setOnClickListener(view -> {
             changeButtonColor(btnBiQuyet,colorBiQuyet);
-            Intent intent = new Intent(Activity_UpdateInfo.this, Secret.class);
+            Intent intent = new Intent(Activity_UpdateInfo.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

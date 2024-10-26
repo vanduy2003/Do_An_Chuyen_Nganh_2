@@ -46,7 +46,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
     private int colorBiQuyet;
     private int textColor;
     private int colorCook;
-    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
     private String recipeId;
     // Khai báo kích thước chữ và giá trị tăng giảm
     private float textSize = 16f; // Kích thước chữ mặc định
@@ -71,7 +71,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnMeoHay = findViewById(R.id.btnMeoHay);
-        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
         btnThreeDots = findViewById(R.id.btn_threedots);
 
@@ -106,8 +106,8 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         });
 
         // bí quyết
-        btnBiQuyet.setOnClickListener(view -> {
-            changeButtonColor(btnBiQuyet,colorBiQuyet);
+        btnCamNang.setOnClickListener(view -> {
+            changeButtonColor(btnCamNang,colorBiQuyet);
             Intent intent = new Intent(Activity_RecipeDetail.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
@@ -417,9 +417,9 @@ public class Activity_RecipeDetail extends AppCompatActivity {
             btnMeoHay.setBackgroundColor(defaultColor);
             btnMeoHay.setTextColor(getResources().getColor(R.color.black));
         }
-        if (button != btnBiQuyet) {
-            btnBiQuyet.setBackgroundColor(defaultColor);
-            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        if (button != btnCamNang) {
+            btnCamNang.setBackgroundColor(defaultColor);
+            btnCamNang.setTextColor(getResources().getColor(R.color.black));
         }
         if (button != btnCook) {
             btnCook.setBackgroundColor(defaultColor);
@@ -440,8 +440,8 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnMeoHay.setBackgroundColor(defaultColor);
         btnMeoHay.setTextColor(getResources().getColor(R.color.black));
 
-        btnBiQuyet.setBackgroundColor(defaultColor);
-        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCamNang.setBackgroundColor(defaultColor);
+        btnCamNang.setTextColor(getResources().getColor(R.color.black));
 
         btnCook.setBackgroundColor(defaultColor);
         btnCook.setTextColor(getResources().getColor(R.color.black));

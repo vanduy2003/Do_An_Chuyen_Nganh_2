@@ -16,7 +16,7 @@
         android:text="Nấu Ăn"
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/btnFavorite"
@@ -28,7 +28,7 @@
         android:padding="10dp"
         android:text="Yêu Thích"
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/btnMeoHay"
@@ -40,19 +40,19 @@
         android:gravity="center"
         android:text="Mẹo Hay"
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/btnBiQuyet"
+        android:id="@+id/btnCamNang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_weight="1"
-        android:drawableTop="@drawable/cooking"
+        android:drawableTop="@drawable/cutlery"
         android:gravity="center"
-        android:text="Bí Quyết"
+        android:text="Cẩm Nang"
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/btnAcount"
@@ -64,5 +64,5 @@
         android:padding="10dp"
         android:text="Tài Khoản"
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="10sp" />
 </LinearLayout>

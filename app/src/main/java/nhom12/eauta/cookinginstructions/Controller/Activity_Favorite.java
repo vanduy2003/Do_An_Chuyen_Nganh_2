@@ -38,7 +38,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private int colorBiQuyet;
     private int textColor;
     private int colorCook;
-    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Activity_Favorite extends AppCompatActivity {
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnMeoHay = findViewById(R.id.btnMeoHay);
-        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
         btnRemove = findViewById(R.id.btnRemove);
 
@@ -102,9 +102,9 @@ public class Activity_Favorite extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
 
         // check gọi menu để chuyển trang
-        // bí quyết
-        btnBiQuyet.setOnClickListener(view -> {
-            changeButtonColor(btnBiQuyet,colorBiQuyet);
+        // Cẩm nang
+        btnCamNang.setOnClickListener(view -> {
+            changeButtonColor(btnCamNang,colorBiQuyet);
             Intent intent = new Intent(Activity_Favorite.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
@@ -194,9 +194,9 @@ public class Activity_Favorite extends AppCompatActivity {
             btnMeoHay.setBackgroundColor(defaultColor);
             btnMeoHay.setTextColor(getResources().getColor(R.color.black));
         }
-        if (button != btnBiQuyet) {
-            btnBiQuyet.setBackgroundColor(defaultColor);
-            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        if (button != btnCamNang) {
+            btnCamNang.setBackgroundColor(defaultColor);
+            btnCamNang.setTextColor(getResources().getColor(R.color.black));
         }
         if (button != btnCook) {
             btnCook.setBackgroundColor(defaultColor);
@@ -217,8 +217,8 @@ public class Activity_Favorite extends AppCompatActivity {
         btnMeoHay.setBackgroundColor(defaultColor);
         btnMeoHay.setTextColor(getResources().getColor(R.color.black));
 
-        btnBiQuyet.setBackgroundColor(defaultColor);
-        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCamNang.setBackgroundColor(defaultColor);
+        btnCamNang.setTextColor(getResources().getColor(R.color.black));
         btnCook.setBackgroundColor(defaultColor);
         btnCook.setTextColor(getResources().getColor(R.color.black));
     }

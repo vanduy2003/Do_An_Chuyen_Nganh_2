@@ -50,7 +50,7 @@ public class Activity_Home extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference categoriesRef;
     EditText txtSearch;
-    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
@@ -105,7 +105,7 @@ public class Activity_Home extends AppCompatActivity {
         btnMenu = findViewById(R.id.btnMenu);
         btnAcc = findViewById(R.id.btnAcount);
         btnMeoHay = findViewById(R.id.btnMeoHay);
-        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnCamNang = findViewById(R.id.btnCamNang);
         gvTopSearch = findViewById(R.id.gvTopSearch);
 
         btnMenu.setOnClickListener(view -> {
@@ -124,8 +124,8 @@ public class Activity_Home extends AppCompatActivity {
         String userId = preferences.getString("userId", null);
 
         // bí quyết
-        btnBiQuyet.setOnClickListener(view -> {
-            changeButtonColor(btnBiQuyet,colorBiQuyet);
+        btnCamNang.setOnClickListener(view -> {
+            changeButtonColor(btnCamNang,colorBiQuyet);
             Intent intent = new Intent(Activity_Home.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
@@ -287,9 +287,9 @@ public class Activity_Home extends AppCompatActivity {
             btnMeoHay.setBackgroundColor(defaultColor);
             btnMeoHay.setTextColor(getResources().getColor(R.color.black));
         }
-        if (button != btnBiQuyet) {
-            btnBiQuyet.setBackgroundColor(defaultColor);
-            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        if (button != btnCamNang) {
+            btnCamNang.setBackgroundColor(defaultColor);
+            btnCamNang.setTextColor(getResources().getColor(R.color.black));
         }
     }
 
@@ -306,8 +306,8 @@ public class Activity_Home extends AppCompatActivity {
         btnMeoHay.setBackgroundColor(defaultColor);
         btnMeoHay.setTextColor(getResources().getColor(R.color.black));
 
-        btnBiQuyet.setBackgroundColor(defaultColor);
-        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCamNang.setBackgroundColor(defaultColor);
+        btnCamNang.setTextColor(getResources().getColor(R.color.black));
     }
 
 

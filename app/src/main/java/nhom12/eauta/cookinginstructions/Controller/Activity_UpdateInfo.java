@@ -43,7 +43,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
     private int colorBiQuyet;
     private int textColor;
     private int colorCook;
-    private TextView btnAcc, btnFavorite, btnMeoHay, btnBiQuyet, btnCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
 
 
 
@@ -70,7 +70,7 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         btnCook = findViewById(R.id.btnCook);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnMeoHay = findViewById(R.id.btnMeoHay);
-        btnBiQuyet = findViewById(R.id.btnBiQuyet);
+        btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
 
         defaultColor = getResources().getColor(R.color.trang);
@@ -148,8 +148,8 @@ public class Activity_UpdateInfo extends AppCompatActivity {
             finish();
         });
 
-        btnBiQuyet.setOnClickListener(view -> {
-            changeButtonColor(btnBiQuyet,colorBiQuyet);
+        btnCamNang.setOnClickListener(view -> {
+            changeButtonColor(btnCamNang,colorBiQuyet);
             Intent intent = new Intent(Activity_UpdateInfo.this, Activity_HandBook.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
@@ -320,9 +320,9 @@ public class Activity_UpdateInfo extends AppCompatActivity {
             btnMeoHay.setBackgroundColor(defaultColor);
             btnMeoHay.setTextColor(getResources().getColor(R.color.black));
         }
-        if (button != btnBiQuyet) {
-            btnBiQuyet.setBackgroundColor(defaultColor);
-            btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        if (button != btnCamNang) {
+            btnCamNang.setBackgroundColor(defaultColor);
+            btnCamNang.setTextColor(getResources().getColor(R.color.black));
         }
         if (button != btnCook) {
             btnCook.setBackgroundColor(defaultColor);
@@ -343,8 +343,8 @@ public class Activity_UpdateInfo extends AppCompatActivity {
         btnMeoHay.setBackgroundColor(defaultColor);
         btnMeoHay.setTextColor(getResources().getColor(R.color.black));
 
-        btnBiQuyet.setBackgroundColor(defaultColor);
-        btnBiQuyet.setTextColor(getResources().getColor(R.color.black));
+        btnCamNang.setBackgroundColor(defaultColor);
+        btnCamNang.setTextColor(getResources().getColor(R.color.black));
 
         btnCook.setBackgroundColor(defaultColor);
         btnCook.setTextColor(getResources().getColor(R.color.black));

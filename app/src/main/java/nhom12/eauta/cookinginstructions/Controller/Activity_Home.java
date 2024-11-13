@@ -394,7 +394,7 @@ public class Activity_Home extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Xác nhận");
         builder.setMessage("Bạn có muốn thoát ứng dụng không?");
-        builder.setIcon(R.mipmap.cooking);
+        builder.setIcon(R.mipmap.chef);
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -410,10 +410,10 @@ public class Activity_Home extends AppCompatActivity {
         });
         builder.create().show();
 
+        // Kiểm tra nếu ngăn kéo menu đang mở, thì đóng lại thay vì thoát ứng dụng
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
+
 }

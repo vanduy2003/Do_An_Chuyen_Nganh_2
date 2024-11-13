@@ -1,18 +1,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <item
         android:id="@+id/menu_Tym"
         android:icon="@drawable/tym"
         android:title="Yêu Thích"
         android:orderInCategory="1"
+        app:iconTint="@null"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/Youtube"
+        android:icon="@drawable/youtube"
+        android:orderInCategory="1"
+        android:title="Video Hướng Dẫn"
+        app:iconTint="@null"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_Share"
         android:icon="@drawable/share"
         android:title="Chia Sẻ"
+        app:iconTintMode="src_in"
         android:orderInCategory="2"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 
     <item
@@ -20,6 +33,7 @@
         android:icon="@drawable/star"
         android:orderInCategory="6"
         android:title="Đánh Giá App"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 
     <item
@@ -27,6 +41,7 @@
         android:icon="@drawable/openbook"
         android:orderInCategory="6"
         android:title="Điều Khoản Và Sử Dụng"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 
     <item
@@ -34,6 +49,7 @@
         android:icon="@drawable/crown"
         android:orderInCategory="9"
         android:title="Premium"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 
     <item
@@ -41,6 +57,7 @@
         android:icon="@drawable/privacypolicy"
         android:orderInCategory="7"
         android:title="Privacy policy"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 
     <item
@@ -48,5 +65,6 @@
         android:icon="@drawable/baseline_settings_24"
         android:orderInCategory="8"
         android:title="Cài Đặt"
+        app:iconTint="@null"
         app:showAsAction="never"/>
 </menu>

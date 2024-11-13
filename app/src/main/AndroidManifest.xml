@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/cooking"
-        android:label="Cooking"
-        android:roundIcon="@mipmap/cooking"
+        android:icon="@mipmap/chef"
+        android:label="MasterChef"
+        android:roundIcon="@mipmap/chef"
         android:supportsRtl="true"
         android:theme="@style/Theme.CookingInstructions"
         tools:targetApi="31">
+        <activity
+            android:name=".Controller.Activity_Youtube"
+            android:exported="false" />
         <activity
             android:name=".Controller.Activity_TipsDetail"
             android:exported="false" />

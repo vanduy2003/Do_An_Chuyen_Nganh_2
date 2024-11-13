@@ -3,8 +3,6 @@ package nhom12.eauta.cookinginstructions.Controller;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import nhom12.eauta.cookinginstructions.Adapter.HandBookAdapter;
-import nhom12.eauta.cookinginstructions.Adapter.SecretAdapter;
 import nhom12.eauta.cookinginstructions.Model.HandBook;
 import nhom12.eauta.cookinginstructions.R;
 
@@ -55,7 +50,7 @@ public class Activity_HandBook extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
-        lvHandBook = findViewById(R.id.lvHandBook);
+        lvHandBook = findViewById(R.id.lvYoutube);
 
 
         defaultColor = getResources().getColor(R.color.trang);

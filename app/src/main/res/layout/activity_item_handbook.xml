@@ -4,23 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:background="#FFFFFF"
+    android:background="#000000"
     android:orientation="vertical"
     android:paddingBottom="10dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
         android:layout_margin="8dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
 
         <ImageView
             android:id="@+id/imgHandbook"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/a1" />
     </androidx.cardview.widget.CardView>
 

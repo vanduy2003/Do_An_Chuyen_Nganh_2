@@ -40,6 +40,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +67,6 @@ public class Activity_Favorite extends AppCompatActivity {
 
         // Lấy userId của người dùng hiện tại
         String userId = getIntent().getStringExtra("UserId");
-
-
 
         // Kiểm tra userId trước khi gọi loadFavoriteRecipes
         if (userId == null || userId.isEmpty()) {
@@ -154,14 +153,18 @@ public class Activity_Favorite extends AppCompatActivity {
         progressDialog.setMessage("Đang tải...");
         progressDialog.show();
 
-        favoritesRef.addValueEventListener(new ValueEventListener() {
+        favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
                 favoriteList.clear();
+
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Favorite favorite = snapshot.getValue(Favorite.class);
-                    favoriteList.add(favorite);
+                    if (favorite != null) {
+                        favoriteList.add(favorite);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -173,6 +176,7 @@ public class Activity_Favorite extends AppCompatActivity {
             }
         });
     }
+
 
 
     private void changeButtonColor(TextView button, int color) {

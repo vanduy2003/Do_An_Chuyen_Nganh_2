@@ -25,7 +25,7 @@ import nhom12.eauta.cookinginstructions.R;
 public class UpdateInfor extends AppCompatActivity {
 
     ImageView imgAvatar;
-    TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday;
+    TextView txtName, txtSex, txtEmail, txtPhone, txtAddress, txtFavorite, txtBirthday, txtYeuThich, txtDanhMuc, txtCongthuc;
     ImageView btnThoat, btnSetting;
     private int defaultColor;
     private int colorAcc;
@@ -35,6 +35,8 @@ public class UpdateInfor extends AppCompatActivity {
     private int textColor;
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,9 @@ public class UpdateInfor extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
+        txtYeuThich = findViewById(R.id.txtYeuThich);
+        txtDanhMuc = findViewById(R.id.txtDanhMuc);
+        txtCongthuc = findViewById(R.id.txtCongthuc);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -67,6 +72,52 @@ public class UpdateInfor extends AppCompatActivity {
 
 
         String userId = getIntent().getStringExtra("userId");
+
+        // Đếm số món ăn yêu thích
+        DatabaseReference favoriteRef = FirebaseDatabase.getInstance().getReference("Favorites").child(userId);
+        favoriteRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int favoriteCount = (int) dataSnapshot.getChildrenCount();
+                txtYeuThich.setText(String.valueOf(favoriteCount)); // Hiển thị số lượng yêu thích
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(UpdateInfor.this, "Lỗi: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Đếm số danh mục đã tạo
+        DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
+        categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int categoryCount = (int) dataSnapshot.getChildrenCount();
+                txtDanhMuc.setText(String.valueOf(categoryCount)); // Hiển thị số lượng danh mục
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(UpdateInfor.this, "Lỗi: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Đếm số công thức đã tạo
+        DatabaseReference recipeRef = FirebaseDatabase.getInstance().getReference("Recipes");
+        recipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int recipeCount = (int) dataSnapshot.getChildrenCount();
+                txtCongthuc.setText(String.valueOf(recipeCount)); // Hiển thị số lượng công thức
+                System.out.println("Số công thức đã tạo: " + recipeCount);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(UpdateInfor.this, "Lỗi: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Thiết lập Firebase Database reference
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId); // Thay "userId" bằng id thực tế của người dùng
@@ -94,7 +145,7 @@ public class UpdateInfor extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Xác nhận");
                     builder.setMessage("Bạn có muốn đăng xuất không?");
-                    builder.setIcon(R.mipmap.cooking);
+                    builder.setIcon(R.mipmap.chef);
                     builder.setPositiveButton("Có", (dialog, which) -> {
                         Intent intent = new Intent(UpdateInfor.this, MainActivity.class);
                         startActivity(intent);
@@ -174,7 +225,7 @@ public class UpdateInfor extends AppCompatActivity {
         // Khi người dùng nhấn nút mẹo hay
         btnFavorite.setOnClickListener(view -> {
             changeButtonColor(btnFavorite, colorFavorite);
-            Intent intent = new Intent(UpdateInfor.this, GoodTips.class);
+            Intent intent = new Intent(UpdateInfor.this, Activity_Favorite.class);
             intent.putExtra("UserId", userId);
             startActivity(intent);
         });

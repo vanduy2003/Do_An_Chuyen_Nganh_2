@@ -50,10 +50,11 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="2"
                         android:background="#00000000"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Thông tin người dùng"
-                        android:layout_gravity="center"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
                         android:textSize="24sp"
@@ -91,10 +92,11 @@
                     android:id="@+id/txtNamef"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:text="Đinh Văn Duy"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -105,64 +107,81 @@
                     android:layout_marginTop="10dp">
 
                     <!-- Cặp đầu tiên -->
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:gravity="center"
-                        android:layout_marginEnd="20dp">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/btnCookNumber1"
+                            android:id="@+id/txtDanhMuc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="0"
-                            android:textSize="20sp"
                             android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/btnCookText1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nấu Ăn"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
+                            android:fontFamily="@font/balsamiq_sans_bold"
+                            android:gravity="center"
+                            android:text="Danh Mục"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <!-- Cặp thứ hai -->
                     <LinearLayout
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="#FFFFFF"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:gravity="center"
-                        android:layout_marginEnd="20dp">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/btnCookNumber2"
+                            android:id="@+id/txtYeuThich"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="0"
-                            android:textSize="20sp"
                             android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:gravity="center"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/btnCookText2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nấu Bánh"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
+                            android:fontFamily="@font/balsamiq_sans_bold"
+                            android:gravity="center"
+                            android:text="Yêu Thích"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <!-- Cặp thứ ba -->
+                    <LinearLayout
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="#FFFFFF"
+                        android:orientation="horizontal"></LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -170,7 +189,7 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/btnCookNumber3"
+                            android:id="@+id/txtCongthuc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -183,14 +202,24 @@
                             android:id="@+id/btnCookText3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nấu Món Khác"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
+                            android:fontFamily="@font/balsamiq_sans_bold"
+                            android:gravity="center"
+                            android:text="Công Thức"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -204,6 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Ngày sinh: "
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
@@ -216,6 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="26/10/2003"
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"
@@ -236,6 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Giới tính:    "
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
@@ -248,6 +280,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Nam"
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"
@@ -280,6 +313,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Hà Nội"
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"
@@ -300,6 +334,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Email:         "
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
@@ -312,6 +347,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="duy@gmail.com"
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"
@@ -332,6 +368,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Phone:        "
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
@@ -344,6 +381,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="0123456789"
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"
@@ -364,6 +402,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Bio:             "
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
@@ -377,6 +416,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/balsamiq_sans_bold"
                         android:text="Nấu ăn mọi lúc mọi nơi, bằng tất cả đam mê."
                         android:textAlignment="viewStart"
                         android:textColor="#FFFFFF"

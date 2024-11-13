@@ -45,11 +45,11 @@
                 android:id="@+id/btn_threedots"
                 android:layout_width="10dp"
                 android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/there_dots"
-                android:layout_marginEnd="10dp"
                 android:layout_gravity="center_vertical"
-                android:clickable="true" />
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/there_dots" />
         </LinearLayout>
     </LinearLayout>
 

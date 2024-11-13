@@ -1,5 +1,7 @@
 package nhom12.eauta.cookinginstructions.Adapter;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
         this.userId = userId;  // Lưu userId để sử dụng khi xóa
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -52,34 +55,42 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
 
         // Xử lý khi người dùng bấm vào btnRemove
         btnRemove.setOnClickListener(v -> {
-            // Xóa món ăn yêu thích khỏi Firebase
-            removeFavoriteFromFirebase(favorite.getRecipeId(), position);
+            // Tạo và hiển thị AlertDialog xác nhận xóa
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Xác nhận xóa");
+            builder.setMessage("Bạn có chắc chắn muốn xóa món ăn này khỏi danh sách yêu thích không?");
+            builder.setIcon(R.mipmap.chef);
+            builder.setPositiveButton("Có", (dialog, which) -> {
+                // Xóa ngay khỏi danh sách và cập nhật giao diện
+                favoriteList.remove(position);
+                notifyDataSetChanged();
+                Toast.makeText(context, "Đã xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
+
+                // Gọi Firebase để xóa
+                removeFavoriteFromFirebase(favorite.getRecipeId());
+            });
+            builder.setNegativeButton("Không", (dialog, which) -> dialog.dismiss());
+
+            // Hiển thị AlertDialog
+            builder.show();
         });
+
 
         return convertView;
     }
 
-    private void removeFavoriteFromFirebase(String recipeId, int position) {
-        // Truy vấn đến Firebase để xóa món ăn yêu thích
-        DatabaseReference favoriteRef = FirebaseDatabase.getInstance().getReference("Favorites")
-                .child(userId) // Truy cập vào Favorites của người dùng
-                .child(recipeId); // Truy cập vào món ăn yêu thích cần xóa
 
-        favoriteRef.removeValue().addOnSuccessListener(aVoid -> {
-            // Kiểm tra lại nếu vị trí hợp lệ trước khi xoá khỏi danh sách
-            if (position >= 0 && position < favoriteList.size()) {
-                // Xóa thành công, cập nhật lại giao diện
-                favoriteList.remove(position);
-                notifyDataSetChanged();
-                Toast.makeText(context, "Đã xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.e("FavoriteAdapter", "Vị trí xoá không hợp lệ: " + position);
-            }
-        }).addOnFailureListener(e -> {
-            // Nếu xảy ra lỗi
+    private void removeFavoriteFromFirebase(String recipeId) {
+        DatabaseReference favoriteRef = FirebaseDatabase.getInstance().getReference("Favorites")
+                .child(userId)
+                .child(recipeId);
+
+        favoriteRef.removeValue().addOnFailureListener(e -> {
             Log.e("FavoriteAdapter", "Lỗi khi xóa món ăn yêu thích", e);
             Toast.makeText(context, "Không thể xóa món ăn yêu thích", Toast.LENGTH_SHORT).show();
         });
     }
+
+
 
 }

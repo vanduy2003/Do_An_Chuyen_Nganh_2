@@ -64,7 +64,7 @@ public class Activity_Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) { 
             return true;
         } else {
             return super.onOptionsItemSelected(item);

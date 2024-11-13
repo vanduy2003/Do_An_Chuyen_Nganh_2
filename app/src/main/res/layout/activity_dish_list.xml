@@ -32,6 +32,7 @@
             android:layout_weight="1"
             android:background="@drawable/custom_edittext"
             android:backgroundTint="#FFFFFF"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:drawablePadding="8dp"
             android:hint="Tìm kiếm theo món ăn"

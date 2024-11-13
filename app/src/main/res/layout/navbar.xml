@@ -16,7 +16,8 @@
         android:text="Nấu Ăn"
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:fontFamily="@font/balsamiq_sans_bold"/>
 
     <TextView
         android:id="@+id/btnFavorite"
@@ -28,7 +29,8 @@
         android:padding="10dp"
         android:text="Yêu Thích"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:fontFamily="@font/balsamiq_sans_bold"/>
 
     <TextView
         android:id="@+id/btnMeoHay"
@@ -40,7 +42,8 @@
         android:gravity="center"
         android:text="Mẹo Hay"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:fontFamily="@font/balsamiq_sans_bold"/>
 
     <TextView
         android:id="@+id/btnCamNang"
@@ -52,7 +55,8 @@
         android:gravity="center"
         android:text="Cẩm Nang"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:fontFamily="@font/balsamiq_sans_bold"/>
 
     <TextView
         android:id="@+id/btnAcount"
@@ -64,5 +68,6 @@
         android:padding="10dp"
         android:text="Tài Khoản"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:fontFamily="@font/balsamiq_sans_bold"/>
 </LinearLayout>

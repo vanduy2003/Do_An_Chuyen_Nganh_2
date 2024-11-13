@@ -26,7 +26,8 @@
             android:padding="5dp"
             android:text="Video hướng dẫn:"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/balsamiq_sans_bold"/>
     </LinearLayout>
 
 </LinearLayout>

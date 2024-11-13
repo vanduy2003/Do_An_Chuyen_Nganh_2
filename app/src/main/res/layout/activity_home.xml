@@ -44,6 +44,7 @@
                 android:drawableLeft="@drawable/ic_baseline_person_24"
                 android:drawablePadding="8dp"
                 android:hint="Tìm kiếm theo danh mục"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="14sp"

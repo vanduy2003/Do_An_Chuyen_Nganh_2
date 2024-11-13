@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:text="Text view"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
@@ -47,6 +48,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="12dp"
                 android:clickable="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/there_dots" />
@@ -72,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="TextView"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="28dp"
                 android:textStyle="bold" />
 
@@ -81,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="TextView"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textAlignment="viewStart"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -90,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nguyên liệu: "
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -98,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="22sp"
                 android:visibility="visible" />
 
@@ -106,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Các bước làm:"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -120,6 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:textSize="22sp" />
             </LinearLayout>
 
@@ -129,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Video hướng dẫn:"
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -144,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Cảm ơn bạn đã quan tâm và theo dõi. Chúc bạn thành công với món ăn của mình."
+                android:fontFamily="@font/balsamiq_sans_bold"
                 android:textAlignment="center"
                 android:textColor="#FF0000"
                 android:textSize="30sp"

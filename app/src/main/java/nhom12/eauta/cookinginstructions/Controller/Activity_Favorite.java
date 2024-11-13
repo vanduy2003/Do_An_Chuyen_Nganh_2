@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,7 +32,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private DatabaseReference favoritesRef;
     private ArrayList<Favorite> favoriteList;
     private FavoriteAdapter adapter;
-    ImageView btnThoat, btnRemove;
+    ImageView btnThoat, btnRemove,btn_timKiem;
     private int defaultColor;
     private int colorAcc;
     private int colorFavorite;
@@ -38,7 +40,8 @@ public class Activity_Favorite extends AppCompatActivity {
     private int colorBiQuyet;
     private int textColor;
     private int colorCook;
-    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook;
+    private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook, txtName;
+    private EditText txtTimKiem;
 
 
     @Override
@@ -56,6 +59,9 @@ public class Activity_Favorite extends AppCompatActivity {
         btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
         btnRemove = findViewById(R.id.btnRemove);
+        btn_timKiem = findViewById(R.id.btn_timKiem);
+        txtTimKiem = findViewById(R.id.txtSearch);
+        txtName = findViewById(R.id.txtNameF);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -75,6 +81,21 @@ public class Activity_Favorite extends AppCompatActivity {
             finish(); // Hoặc thực hiện hành động nào đó
             return;
         }
+        // ẩn hiển tìm kiếm
+        btn_timKiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtTimKiem.getVisibility() == View.GONE) {
+                    // Hiển thị thanh tìm kiếm và ẩn tiêu đề
+                    txtTimKiem.setVisibility(View.VISIBLE);
+                    txtName.setVisibility(View.GONE);
+                } else {
+                    // Ẩn thanh tìm kiếm và hiển thị tiêu đề
+                    txtTimKiem.setVisibility(View.GONE);
+                    txtName.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         // Khởi tạo adapter với userId
         adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList, userId);

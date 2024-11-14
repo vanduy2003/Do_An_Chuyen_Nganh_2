@@ -95,6 +95,7 @@
                     android:id="@+id/addressEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPostalAddress"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -112,6 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textEmailAddress"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -129,6 +131,7 @@
                     android:id="@+id/phoneEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="phone"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -146,6 +149,7 @@
                     android:id="@+id/usernameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPersonName"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -163,6 +167,7 @@
                     android:id="@+id/txtSex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPersonName"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -180,6 +185,7 @@
                     android:id="@+id/txtBirthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPersonName"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -197,6 +203,7 @@
                     android:id="@+id/txtBio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPersonName"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -214,6 +221,7 @@
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/balsamiq_sans_bold"
                     android:inputType="textPassword"
                     android:textColor="#FFFFFF" />
             </com.google.android.material.textfield.TextInputLayout>

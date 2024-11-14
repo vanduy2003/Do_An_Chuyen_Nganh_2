@@ -43,18 +43,18 @@
             android:id="@+id/txtSearch"
             android:layout_width="0dp"
             android:layout_height="43dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/custom_edittext"
             android:backgroundTint="#FFFFFF"
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:drawablePadding="8dp"
-            android:hint="Tìm kiếm theo danh mục"
             android:fontFamily="@font/balsamiq_sans_bold"
-            android:layout_gravity="center"
+            android:hint="Nhập món ăn yêu thích..."
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:visibility="gone"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/btn_timKiem"

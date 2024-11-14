@@ -13,7 +13,6 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="10dp"
             tools:ignore="WebViewLayout">
 
         </WebView>
@@ -22,12 +21,14 @@
             android:id="@+id/txtTitleVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/balsamiq_sans_bold"
             android:lines="2"
-            android:padding="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="Video hướng dẫn:"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/balsamiq_sans_bold"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

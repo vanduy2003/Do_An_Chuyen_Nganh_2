@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import nhom12.eauta.cookinginstructions.Adapter.CatagoryAdapter;
+import nhom12.eauta.cookinginstructions.Model.CatagoryItem;
 import nhom12.eauta.cookinginstructions.Model.Favorite;
 import nhom12.eauta.cookinginstructions.R;
 import nhom12.eauta.cookinginstructions.Adapter.FavoriteAdapter;
@@ -33,6 +35,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private ArrayList<Favorite> favoriteList;
     private FavoriteAdapter adapter;
     ImageView btnThoat, btnRemove,btn_timKiem;
+    EditText txtSearch;
     private int defaultColor;
     private int colorAcc;
     private int colorFavorite;
@@ -42,6 +45,7 @@ public class Activity_Favorite extends AppCompatActivity {
     private int colorCook;
     private TextView btnAcc, btnFavorite, btnMeoHay, btnCamNang, btnCook, txtName;
     private EditText txtTimKiem;
+
 
 
     @Override
@@ -62,6 +66,7 @@ public class Activity_Favorite extends AppCompatActivity {
         btn_timKiem = findViewById(R.id.btn_timKiem);
         txtTimKiem = findViewById(R.id.txtSearch);
         txtName = findViewById(R.id.txtNameF);
+        txtSearch = findViewById(R.id.txtSearch);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -73,6 +78,7 @@ public class Activity_Favorite extends AppCompatActivity {
 
         // Lấy userId của người dùng hiện tại
         String userId = getIntent().getStringExtra("UserId");
+
 
         // Kiểm tra userId trước khi gọi loadFavoriteRecipes
         if (userId == null || userId.isEmpty()) {
@@ -94,6 +100,24 @@ public class Activity_Favorite extends AppCompatActivity {
                     txtTimKiem.setVisibility(View.GONE);
                     txtName.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        // Xử lý sự kiện tìm kiếm
+        txtSearch.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Không cần xử lý
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchFavourite(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+                // Không cần xử lý
             }
         });
 
@@ -164,6 +188,38 @@ public class Activity_Favorite extends AppCompatActivity {
         });
 
     }
+
+    private void searchFavourite(String query) {
+        if (query.isEmpty()) {
+            // Hiển thị lại danh sách gốc nếu không có từ khóa tìm kiếm
+            adapter = new FavoriteAdapter(this, R.layout.favorite_item, favoriteList, getIntent().getStringExtra("UserId"));
+            lvFavorites.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            // Tạo danh sách lọc
+            ArrayList<Favorite> filteredList = new ArrayList<>();
+            for (Favorite item : favoriteList) {
+                if (item.getRecipeTitle().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+
+            // Cập nhật adapter với danh sách đã lọc
+            adapter = new FavoriteAdapter(this, R.layout.favorite_item, filteredList, getIntent().getStringExtra("UserId"));
+            lvFavorites.setAdapter(adapter);
+
+            lvFavorites.setOnItemClickListener((parent, view, position, id) -> {
+                Favorite favorite = filteredList.get(position);
+                String recipeId = favorite.getRecipeId();
+                Intent intent = new Intent(Activity_Favorite.this, Activity_RecipeDetail.class);
+                intent.putExtra("RecipeId", recipeId);
+                startActivity(intent);
+            });
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
 
     private void loadFavoriteRecipes(String userId) {

@@ -231,8 +231,12 @@ public class Activity_Home extends AppCompatActivity {
                     Intent clauseIntent = new Intent(Intent.ACTION_VIEW);
                     clauseIntent.setData(android.net.Uri.parse("https://www.freeprivacypolicy.com/live/8e8a6b8c-1c82-4e35-a1bc-d7c1477e0d9d"));
                     startActivity(clauseIntent);
+                } else if (item.getItemId() == R.id.Youtube) {
+                    Intent intent = new Intent(Activity_Home.this, Activity_Youtube.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
                 }
-
 
 
                 return false; // Trả về false nếu không xử lý được mục nào
@@ -261,10 +265,10 @@ public class Activity_Home extends AppCompatActivity {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, true);
-                handler.postDelayed(this, 5000); // Chuyển ảnh sau 2 giây
+                handler.postDelayed(this, 3000); // Chuyển ảnh sau 2 giây
             }
         };
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, 3000);
     }
 
     // màu cho menu
@@ -327,6 +331,16 @@ public class Activity_Home extends AppCompatActivity {
 
         catagoryAdapter = new CatagoryAdapter(this, R.layout.layout_item_catagory, filteredList);
         gvCatagory.setAdapter(catagoryAdapter);
+
+        gvCatagory.setOnItemClickListener((parent, view, position, id) -> {
+            CatagoryItem selectedCategory = filteredList.get(position);
+            // Tạo Intent để chuyển sang Activity mới
+            Intent intent = new Intent(Activity_Home.this, Activity_DishList.class);
+            // Gửi dữ liệu qua Activity mới
+            intent.putExtra("CategoryId", selectedCategory.getId());
+            startActivity(intent);
+        });
+
         catagoryAdapter.notifyDataSetChanged();
     }
 

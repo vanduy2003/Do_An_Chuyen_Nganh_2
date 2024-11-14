@@ -3,6 +3,7 @@ package nhom12.eauta.cookinginstructions.Controller;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import androidx.core.content.res.ResourcesCompat;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -324,8 +327,9 @@ public class Activity_RecipeDetail extends AppCompatActivity {
                         stepTextView.setText("Bước " + step.getStepNumber() + ": " + "\n" + " - " + step.getDescription());
                         stepTextView.setTextSize(22);
                         stepTextView.setPadding(0, 20, 0, 20);
-
                         ImageView stepImageView = new ImageView(Activity_RecipeDetail.this);
+                        Typeface typeface = ResourcesCompat.getFont(Activity_RecipeDetail.this, R.font.balsamiq_sans_bold);
+                        stepTextView.setTypeface(typeface);
                         stepImageView.setLayoutParams(new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 500

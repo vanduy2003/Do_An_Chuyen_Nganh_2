@@ -35,12 +35,13 @@ import nhom12.eauta.cookinginstructions.Model.Tips;
 import nhom12.eauta.cookinginstructions.R;
 
 public class Activity_TipsDetail extends AppCompatActivity {
-    private TextView txtNameF, txtTitle, txtDesc, txtTitleVideo;
+    private TextView txtNameF, txtTitle, txtDesc, txtTitleVideo, tvSteps;
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
     private DatabaseReference tipsRef,favoriteRef;
     ImageView btnThoat, btnZoomIn, btnZoomOut, btnThreeDots;
     WebView webView;
+    private String imageUrl;  // Lưu URL hình ảnh công thức
     private int defaultColor;
     private int colorAcc;
     private int colorFavorite;
@@ -64,6 +65,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
         txtNameF = findViewById(R.id.txtNameF);
         txtTitle = findViewById(R.id.txtTitle);
         txtDesc = findViewById(R.id.txtDesc);
+        tvSteps = findViewById(R.id.tvSteps);
         txtTitleVideo = findViewById(R.id.txtTitleVideo);
         layoutSteps = findViewById(R.id.layoutSteps);
         btnThoat = findViewById(R.id.btnThoat);
@@ -196,7 +198,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btnShare) {
                     // Gọi hàm chia sẻ công thức hoặc thông tin ở đây
-                    // shareRecipe();
+                    shareRecipe();
                     return true; // Trả về true nếu xử lý thành công
                 } else if (item.getItemId() == R.id.btnTym) {
                     // Xử lý thêm vào danh sách yêu thích
@@ -210,6 +212,44 @@ public class Activity_TipsDetail extends AppCompatActivity {
 
         // Hiển thị menu
         popupMenu.show();
+    }
+
+
+
+    // Hàm chia sẻ công thức
+    private void shareRecipe() {
+        // Lấy nội dung cần chia sẻ
+        String title = txtTitle.getText().toString();
+        String description = txtDesc.getText().toString();
+
+
+        // Kiểm tra xem dữ liệu đã được load đầy đủ chưa
+        if (title.isEmpty() || description.isEmpty()) {
+            Toast.makeText(Activity_TipsDetail.this, "Vui lòng đợi nội dung được tải đầy đủ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Tạo nội dung chia sẻ
+        String shareContent = title + "\n\n" + description + "\n\nNguyên liệu:\n" + txtDesc + "\n\nCác bước làm:\n";
+
+        // Nếu có hình ảnh, thêm vào nội dung chia sẻ
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            shareContent += "\n\nHình ảnh món ăn: " + imageUrl;
+        }
+
+        // Tạo Intent chia sẻ
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Chia sẻ công thức món ăn");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+
+        // Kiểm tra xem có ứng dụng nào hỗ trợ chia sẻ không
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(shareIntent, "Chia sẻ công thức qua"));
+        } else {
+            Toast.makeText(Activity_TipsDetail.this, "Không có ứng dụng nào hỗ trợ chia sẻ", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     // Hàm thêm công thức vào danh sách yêu thích
@@ -300,12 +340,14 @@ public class Activity_TipsDetail extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Tips tips = snapshot.getValue(Tips.class);
+                Recipe recipe = snapshot.getValue(Recipe.class);
 
                 if (tips != null) {
                     // Cập nhật các thông tin cơ bản
                     txtNameF.setText(tips.getTitle());
                     txtTitle.setText(tips.getTitle());
                     txtDesc.setText(tips.getDescription());
+                    imageUrl = recipe.getImg();  // Lưu URL hình ảnh để chia sẻ
 
 
                     // Cấu hình WebView để hiển thị và phát video trong app

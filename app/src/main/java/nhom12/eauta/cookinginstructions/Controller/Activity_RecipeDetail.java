@@ -76,7 +76,7 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         btnMeoHay = findViewById(R.id.btnMeoHay);
         btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
-        btnThreeDots = findViewById(R.id.btn_threedots);
+        btnThreeDots = findViewById(R.id.btnThreeDots);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);

@@ -3,18 +3,23 @@ package nhom12.eauta.cookinginstructions.Controller;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import nhom12.eauta.cookinginstructions.Model.Favorite;
+import nhom12.eauta.cookinginstructions.Model.Recipe;
 import nhom12.eauta.cookinginstructions.Model.Step;
 import nhom12.eauta.cookinginstructions.Model.Tips;
 import nhom12.eauta.cookinginstructions.R;
@@ -31,8 +38,8 @@ public class Activity_TipsDetail extends AppCompatActivity {
     private TextView txtNameF, txtTitle, txtDesc, txtTitleVideo;
     private LinearLayout layoutSteps;
     private FirebaseDatabase database;
-    private DatabaseReference tipsRef;
-    ImageView btnThoat, btnZoomIn, btnZoomOut;
+    private DatabaseReference tipsRef,favoriteRef;
+    ImageView btnThoat, btnZoomIn, btnZoomOut, btnThreeDots;
     WebView webView;
     private int defaultColor;
     private int colorAcc;
@@ -45,6 +52,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
     // Khai báo kích thước chữ và giá trị tăng giảm
     private float textSize = 16f; // Kích thước chữ mặc định
     private final float zoomIncrement = 2f; // Giá trị thay đổi khi zoom
+    private String userId;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,6 +74,7 @@ public class Activity_TipsDetail extends AppCompatActivity {
         btnCamNang = findViewById(R.id.btnCamNang);
         btnAcc = findViewById(R.id.btnAcount);
         btnFavorite = findViewById(R.id.btnFavorite);
+        btnThreeDots = findViewById(R.id.btnThreeDots);
 
         defaultColor = getResources().getColor(R.color.trang);
         colorAcc = getResources().getColor(R.color.hong);
@@ -77,7 +86,20 @@ public class Activity_TipsDetail extends AppCompatActivity {
         btnZoomIn = findViewById(R.id.btnZoomIn);
         btnZoomOut = findViewById(R.id.btnZoomOut);
 
+        // Lấy userId từ SharedPreferences
+        userId = getSharedPreferences("MyAppPrefs", MODE_PRIVATE).getString("userId", null);
         String tipsId = getIntent().getStringExtra("TipsId");
+
+        // Thiết lập OnClickListener cho btnThreeDots
+        btnThreeDots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hiển thị menu tùy chọn
+                showMenu(v, tipsId);
+            }
+        });
+
+
         loadTipsDetail(tipsId);
 
         btnThoat = findViewById(R.id.btnThoat);
@@ -156,6 +178,60 @@ public class Activity_TipsDetail extends AppCompatActivity {
             }
         }
     }
+
+    // Hàm hiển thị menu tùy chọn
+    private void showMenu(View v, String tipsId) {
+        PopupMenu popupMenu = new PopupMenu(this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_share_tym, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.btnShare) {
+//                    shareRecipe();
+                    return true;
+                } else if (item.getItemId() == R.id.btnTym) {
+                    addTipToFavorites(tipsId);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+
+    // Hàm thêm công thức vào danh sách yêu thích
+    private void addTipToFavorites(String tipsId) {
+        tipsRef = database.getReference("Tips").child(tipsId);
+        favoriteRef = database.getReference("Favorites").child(userId).child(tipsId);
+
+        tipsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Tips tips = dataSnapshot.getValue(Tips.class);
+                if (tips != null) {
+                    Favorite favoriteRecipe = new Favorite(
+                            tipsId,
+                            tips.getTitle(),
+                            tips.getImageUrl()
+                    );
+
+                    favoriteRef.setValue(favoriteRecipe).addOnSuccessListener(aVoid -> {
+                        Toast.makeText(Activity_TipsDetail.this, "Đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(Activity_TipsDetail.this, "Thêm vào món yêu thích thất bại", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "addRecipeToFavorites:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
     // màu cho menu
     private void changeButtonColor(TextView button, int color) {
         // Đặt màu nền
@@ -248,6 +324,8 @@ public class Activity_TipsDetail extends AppCompatActivity {
                         stepTextView.setText("Cách " + step.getStepNumber() + ": " + "\n" + " - " + step.getDescription());
                         stepTextView.setTextSize(22);
                         stepTextView.setPadding(0, 20, 0, 20);
+                        Typeface typeface = ResourcesCompat.getFont(Activity_TipsDetail.this, R.font.balsamiq_sans_bold);
+                        stepTextView.setTypeface(typeface);
                         layoutSteps.addView(stepTextView);
 
                         // Tạo ImageView cho hình ảnh mỗi bước (nếu cần)

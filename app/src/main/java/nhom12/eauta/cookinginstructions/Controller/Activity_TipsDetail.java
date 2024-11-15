@@ -179,25 +179,36 @@ public class Activity_TipsDetail extends AppCompatActivity {
         }
     }
 
-    // Hàm hiển thị menu tùy chọn
     private void showMenu(View v, String tipsId) {
+        // Tạo PopupMenu
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_share_tym, popupMenu.getMenu());
 
+        // Kiểm tra phiên bản API và tự xử lý biểu tượng nếu cần thiết
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // Nếu API level >= 29, sử dụng setForceShowIcon (cho các phiên bản mới)
+            popupMenu.setForceShowIcon(true);
+        }
+
+        // Xử lý sự kiện khi chọn mục trong menu
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.btnShare) {
-//                    shareRecipe();
-                    return true;
+                    // Gọi hàm chia sẻ công thức hoặc thông tin ở đây
+                    // shareRecipe();
+                    return true; // Trả về true nếu xử lý thành công
                 } else if (item.getItemId() == R.id.btnTym) {
+                    // Xử lý thêm vào danh sách yêu thích
                     addTipToFavorites(tipsId);
                     return true;
                 } else {
-                    return false;
+                    return false; // Trả về false nếu không xử lý
                 }
             }
         });
+
+        // Hiển thị menu
         popupMenu.show();
     }
 

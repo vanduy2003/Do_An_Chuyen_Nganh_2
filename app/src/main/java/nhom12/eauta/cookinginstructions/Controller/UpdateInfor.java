@@ -132,6 +132,12 @@ public class UpdateInfor extends AppCompatActivity {
             PopupMenu popupMenu = new PopupMenu(UpdateInfor.this, btnSetting);
             popupMenu.getMenuInflater().inflate(R.menu.menu_setting, popupMenu.getMenu());
 
+            // Kiểm tra phiên bản API và tự xử lý biểu tượng nếu cần thiết
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                // Nếu API level >= 29, sử dụng setForceShowIcon (cho các phiên bản mới)
+                popupMenu.setForceShowIcon(true);
+            }
+
             // Xử lý sự kiện khi chọn mục trong menu
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.btnUpdate) {

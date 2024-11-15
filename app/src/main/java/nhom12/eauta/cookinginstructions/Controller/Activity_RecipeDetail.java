@@ -180,6 +180,12 @@ public class Activity_RecipeDetail extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_share_tym, popupMenu.getMenu());
 
+        // Kiểm tra phiên bản API và tự xử lý biểu tượng nếu cần thiết
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            // Nếu API level >= 29, sử dụng setForceShowIcon (cho các phiên bản mới)
+            popupMenu.setForceShowIcon(true);
+        }
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

@@ -6,8 +6,10 @@
     <item
         android:id="@+id/btnShare"
         android:title="Chia Sẻ"
+        android:icon="@drawable/baseline_share_24"
         android:orderInCategory="1"
         app:showAsAction="never"/>
+
     <item
         android:id="@+id/btnTym"
         android:icon="@drawable/tym"

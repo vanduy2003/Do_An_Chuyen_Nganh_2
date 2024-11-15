@@ -43,7 +43,7 @@
                 android:ellipsize="end" />
 
             <ImageView
-                android:id="@+id/btn_threedots"
+                android:id="@+id/btnThreeDots"
                 android:layout_width="10dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"

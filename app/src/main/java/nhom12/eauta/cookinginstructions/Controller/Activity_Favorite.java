@@ -181,9 +181,22 @@ public class Activity_Favorite extends AppCompatActivity {
 
         lvFavorites.setOnItemClickListener((parent, view, position, id) -> {
             Favorite favorite = favoriteList.get(position);
-            String recipeId = favorite.getRecipeId();
-            Intent intent = new Intent(Activity_Favorite.this, Activity_RecipeDetail.class);
-            intent.putExtra("RecipeId", recipeId);
+            String itemId = favorite.getRecipeId();
+
+            Intent intent;
+            if (itemId.startsWith("recipe_id")) {
+                // Nếu là công thức nấu ăn
+                intent = new Intent(Activity_Favorite.this, Activity_RecipeDetail.class);
+                intent.putExtra("RecipeId", itemId);
+            } else if (itemId.startsWith("tip_id")) {
+                // Nếu là mẹo hay
+                intent = new Intent(Activity_Favorite.this, Activity_TipsDetail.class);
+                intent.putExtra("TipsId", itemId);
+            } else {
+                // Nếu không phải là công thức nấu ăn hoặc mẹo hay
+                Log.e("Activity_Favorite", "Unknown item type: " + itemId);
+                return;
+            }
             startActivity(intent);
         });
 
